@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="@color/light_blue"
+    android:orientation="vertical" >
+    
+	<ImageButton 
+	    android:id="@+id/goback"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:paddingTop="15dp"
+	    android:paddingBottom="15dp"
+	    android:contentDescription="@string/app_name"
+	    android:background="@color/alp100"
+	    android:src="@drawable/header_back_ml"
+	    
+	    />
+	 <TextView
+        android:id="@+id/header_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="ddx演示"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+</RelativeLayout>
