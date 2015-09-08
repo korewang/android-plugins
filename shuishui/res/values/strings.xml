@@ -8,5 +8,6 @@
     <string name="title_activity_get_gps">GetGPSActivity</string>
     <string name="title_activity_bmap">BmapActivity</string>
     <string name="title_activity_web_chrome">WebChromeActivity</string>
+    <string name="title_activity_down_image">DownImageActivity</string>
 
 </resources>

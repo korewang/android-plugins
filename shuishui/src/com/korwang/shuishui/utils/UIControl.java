@@ -1,6 +1,7 @@
 package com.korwang.shuishui.utils;
 
 import com.korewang.shuishui.activitys.BmapActivity;
+import com.korewang.shuishui.activitys.DownImageActivity;
 import com.korewang.shuishui.activitys.GetGPSActivity;
 import com.korewang.shuishui.activitys.ListAppActivity;
 import com.korewang.shuishui.activitys.WebChromeActivity;
@@ -30,5 +31,9 @@ public class UIControl {
         Intent intent = new Intent(context, WebChromeActivity.class);
         //context.startActivityForResult(intent);
         context.startActivity(intent);
+    }
+    public static void startDownImageActivity(Context context){
+    	Intent intent = new Intent(context,DownImageActivity.class);
+    	context.startActivity(intent);
     }
 }

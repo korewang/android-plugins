@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
+	<uses-feature android:name="android.hardware.wifi" />
     <application
         android:name=".application.Applications"
         android:allowBackup="true"
@@ -61,8 +61,12 @@
             android:value="mjZf0EG5bAdNYEbGGOt3X480" />
 
         <activity
-            android:name="com.korewang.shuishui.activitys.WebChromeActivity"
+            android:name=".activitys.WebChromeActivity"
             android:label="@string/title_activity_web_chrome" >
+        </activity>
+        <activity
+            android:name="com.korewang.shuishui.activitys.DownImageActivity"
+            android:label="@string/title_activity_down_image" >
         </activity>
     </application>
 

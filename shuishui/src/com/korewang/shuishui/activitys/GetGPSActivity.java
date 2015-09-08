@@ -243,3 +243,18 @@ public class GetGPSActivity extends Activity {
 
 	    };
 }
+/*
+ * 在使用loadDataWithBaseURL时，需要注意的就是 baseUr：虽然API上写的是要传一个Url，但我在用时，
+ * 发现传一个Url并不可以，我发现这个就是一个标志位，用来标志当前页面的Key值的，而historyUrl就是一个value值
+ * ，在加载时，它会把baseUrl和historyUrl传到List列表中，当作历史记录来使用，当前进和后退时，
+ * 它会通过baseUrl来寻找historyUrl的路径来加载historyUrl路径来加载历史界面，
+ * 需要注意的就是history所指向的必须是一个页面，并且页面存在于SD卡中或程序中（assets），loadDataWithBaseURL，
+ * 它本身并不会向历史记录中存储数据，要想实现历史记录，需要我们自己来实现，也许是我的技术有限，
+ * 我有了比较笨的访求来实现：就是在加载页面时，我把数据另外的写到一个html页面中，并把它保存到SD中，
+ * 当点击返回时，它会通过historyUrl指向的路径来加载页面，这样就解决了历史记录问题。
+ 
+上面这两种方法，我建议使用后者，虽然loadData的历史记录不需要我们自己来实现，但在使用时，
+我们必须把所有的%，#，\，?转换掉，在转换时，也许会遇到别的困难，我也没有测完。
+这就两个加载上后者比前者快一到两倍。
+ * 
+ * */

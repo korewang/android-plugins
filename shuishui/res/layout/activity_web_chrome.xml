@@ -10,20 +10,61 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:id="@+id/headerViewweb" />
-    <TextView
-        android:id="@+id/textv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
 
     <WebView
         android:id="@+id/co"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
-    <Button 
+	<LinearLayout 
+	    android:id="@+id/lin"
+	    android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+	     <Button 
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add" />"
+        android:text="add" />
+	    <Button
+        android:id="@+id/id_rsa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加密" />
+	    <Button
+        android:id="@+id/id_rsa_public"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="解密" />
+	</LinearLayout>
+   <ScrollView
+       android:id="@+id/sView"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" >
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical" >
+            <EditText
+		        android:id="@+id/comemsm"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:ems="10" >
+		        <requestFocus />
+		    </EditText>
+		
+		    <TextView
+		        android:id="@+id/msmContext"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="" />
+		   <EditText
+		        android:id="@+id/canPaste"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:ems="10" >
+		    </EditText>
+       </LinearLayout>
+   </ScrollView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import com.korewang.shuishui.R.id;
 import com.korewang.shuishui.R.layout;
 import com.korewang.shuishui.R.menu;
 import com.korewang.shuishui.widget.HeaderView;
+import com.korwang.shuishui.utils.MD5Utils;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -15,11 +16,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class WebChromeActivity extends Activity {
+public class WebChromeActivity extends Activity implements OnClickListener{
 	private WebView _co;
+	private Button id_rsa,id_rsa_public;
+	private EditText inputText,canPaste;
+	private TextView showText;
+	private String str;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,12 +38,45 @@ public class WebChromeActivity extends Activity {
 		HeaderView view = (HeaderView)findViewById(R.id.headerViewweb);
 		view.setHeaderTitle("web");
 		
-		String url = "http://www.baidu.com";
+		String url = "http://www.baidu.com"; // "file:///android_asset/testloading.html"
 		_co = (WebView)findViewById(R.id.co);
 		_co.getSettings().setJavaScriptEnabled(true);
 		_co.setWebViewClient(new WebViewClient());
 		_co.loadUrl(url);
 		initsq();
+		initView();
+	}
+	public void initView(){
+		id_rsa = (Button)findViewById(R.id.id_rsa);
+		
+		id_rsa_public = (Button)findViewById(R.id.id_rsa_public);
+		inputText = (EditText)findViewById(R.id.comemsm);
+		showText  =(TextView)findViewById(R.id.msmContext);
+		canPaste =  (EditText)findViewById(R.id.canPaste);
+		id_rsa.setOnClickListener( this);
+		id_rsa_public.setOnClickListener(this);
+	}
+	@Override
+	public void onClick(View v) {
+	  
+        switch (v.getId()) {
+         	case R.id.id_rsa:
+         		Log.i("key","id key");
+         		 str = inputText.getText().toString();
+         		showText.setText("加密：="+MD5Utils.convertMD5(str));
+         		canPaste.setText(MD5Utils.convertMD5(str));
+         		break;
+         	case R.id.id_rsa_public:
+         		Log.i("key", "id public ");
+         		 str = inputText.getText().toString();
+         		
+         		showText.setText("加密：="+MD5Utils.convertMD5(MD5Utils.convertMD5(str)));
+         		canPaste.setText(MD5Utils.convertMD5(MD5Utils.convertMD5(str)));
+         		 break;
+     		 default:
+     			Log.i("key", "nothing ");
+     			 break;
+        }
 	}
 	public void initsq(){
 		//打开或创建test.db数据库  

@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+   	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.korewang.shuishui.activitys.DownImageActivity" >
+	
+	
+	<com.korewang.shuishui.widget.HeaderView
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:id="@+id/headerDownView" />
+
+	<LinearLayout
+	    android:id="@+id/linerbtn"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+
+	    <Button
+	        android:id="@+id/DownBtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="downBTN" />
+
+	    <Button
+	        android:id="@+id/GetBatteryMSG"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="GetBatMSG" />
+	    <Button
+	        android:id="@+id/ScanWifi"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="ScanWifi" />
+
+	</LinearLayout>
+	<EditText
+	    android:id="@+id/inputText"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="http://ww4.sinaimg.cn/bmiddle/786013a5jw1e7akotp4bcj20c80i3aao.jpg"
+	    android:ems="10" >
+
+	    <requestFocus />
+	</EditText>
+
+	<ImageView
+	    android:id="@+id/showImage"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

@@ -29,7 +29,7 @@ import android.widget.ListView;
 public class InitActivity extends Activity {
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite","下载一个图片显示在imageview里"};
 	
 	
 	@Override
@@ -84,6 +84,8 @@ public class InitActivity extends Activity {
             		UIControl.startBmapActivity(mContext);
             	}else if(arg2==3){
             		UIControl.startWebViewActivity(mContext);
+            	}else if(arg2==4){
+            		UIControl.startDownImageActivity(mContext);
             	}
             }
         });
