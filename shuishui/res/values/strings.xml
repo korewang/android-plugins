@@ -9,5 +9,7 @@
     <string name="title_activity_bmap">BmapActivity</string>
     <string name="title_activity_web_chrome">WebChromeActivity</string>
     <string name="title_activity_down_image">DownImageActivity</string>
+    <string name="title_activity_fragment_demo">FragmentDemoActivity</string>
+    <string name="title_activity_fragment_main">FragmentMainActivity</string>
 
 </resources>

@@ -21,7 +21,9 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-	<uses-feature android:name="android.hardware.wifi" />
+
+    <uses-feature android:name="android.hardware.wifi" />
+
     <application
         android:name=".application.Applications"
         android:allowBackup="true"
@@ -31,7 +33,7 @@
         <activity
             android:name=".activitys.InitActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -65,8 +67,18 @@
             android:label="@string/title_activity_web_chrome" >
         </activity>
         <activity
-            android:name="com.korewang.shuishui.activitys.DownImageActivity"
+            android:name=".activitys.DownImageActivity"
             android:label="@string/title_activity_down_image" >
+        </activity>
+        <activity
+            android:name=".activitys.FragmentDemoActivity"
+            android:label="@string/title_activity_fragment_demo" >
+           
+        </activity>
+        <activity
+            android:name=".FragmentMainActivity"
+            android:label="@string/title_activity_fragment_main" >
+           
         </activity>
     </application>
 

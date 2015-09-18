@@ -1,5 +1,6 @@
 package com.korwang.shuishui.utils;
 
+import com.korewang.shuishui.FragmentMainActivity;
 import com.korewang.shuishui.activitys.BmapActivity;
 import com.korewang.shuishui.activitys.DownImageActivity;
 import com.korewang.shuishui.activitys.GetGPSActivity;
@@ -34,6 +35,10 @@ public class UIControl {
     }
     public static void startDownImageActivity(Context context){
     	Intent intent = new Intent(context,DownImageActivity.class);
+    	context.startActivity(intent);
+    }
+    public static void startFragmentActivity(Context context){
+    	Intent intent = new Intent(context,FragmentMainActivity.class);
     	context.startActivity(intent);
     }
 }

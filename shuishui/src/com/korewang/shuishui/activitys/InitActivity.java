@@ -3,6 +3,7 @@ package com.korewang.shuishui.activitys;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import com.korewang.shuishui.R;
 import com.korewang.shuishui.widget.HeaderView;
 import com.korwang.shuishui.utils.BadgeUtil;
@@ -10,6 +11,7 @@ import com.korwang.shuishui.utils.UIControl;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +31,7 @@ import android.widget.ListView;
 public class InitActivity extends Activity {
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite","下载一个图片显示在imageview里"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite","下载一个图片显示在imageview里","Fragment learning"};
 	
 	
 	@Override
@@ -38,7 +40,11 @@ public class InitActivity extends Activity {
 		setContentView(R.layout.init_activity_ly);
 		mContext = this;
 		initView();
-		
+		 Intent intent = new Intent();  
+         intent.setAction("com.spinner.edit");  
+//         intent.putExtra("support_edit", isEdit); 
+         intent.putExtra("name", "xiazdong");
+         InitActivity.this.sendBroadcast(intent);
 		
 	}
 	
@@ -86,6 +92,8 @@ public class InitActivity extends Activity {
             		UIControl.startWebViewActivity(mContext);
             	}else if(arg2==4){
             		UIControl.startDownImageActivity(mContext);
+            	}else if(arg2==5){
+            		UIControl.startFragmentActivity(mContext);
             	}
             }
         });

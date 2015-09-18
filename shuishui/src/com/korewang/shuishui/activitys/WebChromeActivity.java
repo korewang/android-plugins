@@ -8,8 +8,11 @@ import com.korewang.shuishui.widget.HeaderView;
 import com.korwang.shuishui.utils.MD5Utils;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -45,7 +48,22 @@ public class WebChromeActivity extends Activity implements OnClickListener{
 		_co.loadUrl(url);
 		initsq();
 		initView();
+		
+		
+		IntentFilter myfile =  new IntentFilter("com.spinner.edit");
+		
+		
+		registerReceiver(myReceiver, myfile);
 	}
+	BroadcastReceiver myReceiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			String msg = intent.getExtras().getString("name");
+			Log.i("msg", "msg=="+msg);
+		}
+	};
 	public void initView(){
 		id_rsa = (Button)findViewById(R.id.id_rsa);
 		
@@ -121,6 +139,11 @@ public class WebChromeActivity extends Activity implements OnClickListener{
           
         //删除test.db数据库  
 //      deleteDatabase("test.db");  
+	}
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		unregisterReceiver(myReceiver);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
