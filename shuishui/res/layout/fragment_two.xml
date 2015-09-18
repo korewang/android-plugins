@@ -1,15 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_two"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@color/white" >
     
     
     <TextView 
        android:id="@+id/text"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
+         android:layout_width="fill_parent"
+         android:layout_height="40dp"
+         android:gravity="center_vertical"
          android:text="我是第2个Fragment"
-         android:textSize="20dp"/>
+         android:textSize="20dp"
+         android:textColor="@drawable/textdrwable"/>
 
+     <MultiAutoCompleteTextView android:id="@+id/multiAutoCompleteTextView"
+	        android:layout_width="fill_parent"
+	        android:hint="输入省份查找"
+	        android:layout_marginTop="40dp"
+	        android:layout_height="40dp"/>
 </RelativeLayout>

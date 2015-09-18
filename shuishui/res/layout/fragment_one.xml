@@ -5,11 +5,16 @@
     
     
     <TextView 
-       android:id="@+id/text"
+      	 android:id="@+id/text"
          android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
-         android:text="我是第一个Fragment"
+         android:layout_height="40dp"
+         android:gravity="center_vertical"
+         android:text="我是第一个Fragment,测试spinner"
          android:textSize="20dp"/>
+    <Spinner
+	        android:id="@+id/spinner"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:layout_marginTop="40dp"/>
 
 </RelativeLayout>
