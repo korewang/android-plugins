@@ -8,8 +8,17 @@
        android:id="@+id/text"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
-         android:text="我是第3个Fragment"
+         android:layout_centerHorizontal="true"
+         android:text="Fragment的PhoneInfo信息"
          android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/myPhoneInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text"
+        android:layout_below="@+id/text"
+        android:layout_marginTop="20dp"
+        android:text="phoneinfo" />
 
 </RelativeLayout>

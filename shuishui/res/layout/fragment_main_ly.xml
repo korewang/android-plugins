@@ -29,7 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="title"
+            android:text="@string/fragment_title"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:maxWidth="200dp"
             android:textColor="@color/black"
             android:textSize="28sp" />
 
