@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.korewang.shuishui.R;
 
-public class FragmentPageTwo extends Fragment implements View.OnClickListener{
+public class FragmentPageTwo extends Fragment implements View.OnClickListener,View.OnTouchListener{
 	private static final String TAG = "FragmentPageTwo";
 	private Context context;
 	private View rootView;
@@ -41,7 +42,7 @@ public class FragmentPageTwo extends Fragment implements View.OnClickListener{
 	}
 	public void initView(){
 		 mfragment_two = (RelativeLayout)rootView.findViewById(R.id.fragment_two);
-		 mfragment_two.setOnClickListener(this);
+		 mfragment_two.setOnTouchListener(this);
 	     multiAutoCompleteTextView=(MultiAutoCompleteTextView)rootView.findViewById(R.id.multiAutoCompleteTextView);
 		 //创建适配器
          province =getResources().getStringArray(R.array.province); 
@@ -61,14 +62,29 @@ public class FragmentPageTwo extends Fragment implements View.OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.fragment_two:
-			 InputMethodManager ih = (InputMethodManager)  
-			 context.getSystemService(Context.INPUT_METHOD_SERVICE);  
-			 ih.hideSoftInputFromWindow(v.getWindowToken(), 0);  
+			//to do other  things
 			break;
 
 		default:
 			break;
 		}
 		
+	}
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.fragment_two:
+			InputMethodManager ih = (InputMethodManager)  
+			context.getSystemService(Context.INPUT_METHOD_SERVICE);  
+			ih.hideSoftInputFromWindow(v.getWindowToken(), 0);  
+			mfragment_two.setFocusable(true);
+			mfragment_two.setFocusableInTouchMode(true);
+			mfragment_two.requestFocus();
+			break;
+		default:
+			break;
+		}
+		return false;
 	}
 }
