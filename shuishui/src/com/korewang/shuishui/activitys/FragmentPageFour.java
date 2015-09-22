@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 import com.korewang.shuishui.R;
 
@@ -28,6 +30,8 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
     private Bitmap bitmap, updateBitmap;  
     private Canvas canvas;  
     private Paint paint;  
+    private TextView mText;
+    private int bmSql;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
 	
 	/*view rgb*/
 	public void initRGB(){
+		mText = (TextView)rootView.findViewById(R.id.text);
 		iv = (ImageView)rootView.findViewById(R.id.iv);  
         sb1 = (SeekBar) rootView.findViewById(R.id.sb1);  
         sb2 = (SeekBar) rootView.findViewById(R.id.sb2);  
@@ -64,7 +69,7 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
         final Matrix matrix = new Matrix();  
         canvas.drawBitmap(bitmap, matrix, paint);  
         iv.setImageBitmap(updateBitmap);
-        
+        mText.setOnClickListener(this);
         /** 
          * RGB三原色 红色值的设置 
          */  
@@ -212,10 +217,34 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
             }  
         }); 
 	}
+	public void reSetProgressBar(){
+		 sb1.setProgress(128);
+		 sb2.setProgress(128);
+		 sb3.setProgress(128);
+		 sb4.setProgress(128);
+		 sb5.setProgress(128);
+	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
+		switch (v.getId()) {
+		case R.id.text:
+			// reset imageView resource
+			if(bmSql ==R.drawable.wats){
+				bmSql = R.drawable.river;
+			}else if(bmSql ==R.drawable.sock){
+				bmSql = R.drawable.wats;
+			}else{
+				bmSql =R.drawable.sock;
+			}
+			bitmap = BitmapFactory.decodeResource(getResources(), bmSql);
+	        iv.setImageBitmap(bitmap);
+	        reSetProgressBar();
+			break;
+
+		default:
+			break;
+		}
 	}
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
