@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+    
+     <ScrollView
+        android:id="@+id/myScrollV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <!-- android:layout_alignParentLeft="true" 左对齐暂时不用-->
+	    <LinearLayout 
+	      
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/alphimage"
+	        android:orientation="vertical"
+	        android:id="@+id/dealimg">
+	        <ImageView  
+		        android:id="@+id/iv"  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content" />  
+	  
+		    <LinearLayout  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"  
+		        android:gravity="center_vertical"  
+		        android:orientation="horizontal"  
+		        android:padding="10dp" >  
+		  
+		        <TextView  
+		            android:layout_width="wrap_content"  
+		            android:layout_height="wrap_content"  
+		            android:text="红色:"  
+		            android:textColor="#FF0000"  
+		            android:textSize="24sp" />  
+		  
+		        <SeekBar  
+		            android:id="@+id/sb1"  
+		            android:layout_width="fill_parent"  
+		            android:layout_height="wrap_content"  
+		            android:max="256"  
+		            android:progress="128" />  
+		    </LinearLayout>  
+		  
+		    <LinearLayout  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"  
+		        android:gravity="center_vertical"  
+		        android:orientation="horizontal"  
+		        android:padding="10dp" >  
+		  
+		        <TextView  
+		            android:layout_width="wrap_content"  
+		            android:layout_height="wrap_content"  
+		            android:text="绿色:"  
+		            android:textColor="#00FF00"  
+		            android:textSize="24sp" />  
+		  
+		        <SeekBar  
+		            android:id="@+id/sb2"  
+		            android:layout_width="fill_parent"  
+		            android:layout_height="wrap_content"  
+		            android:max="256"  
+		            android:progress="128" />  
+		    </LinearLayout>  
+		  
+		    <LinearLayout  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"  
+		        android:gravity="center_vertical"  
+		        android:orientation="horizontal"  
+		        android:padding="10dp" >  
+		  
+		        <TextView  
+		            android:layout_width="wrap_content"  
+		            android:layout_height="wrap_content"  
+		            android:text="蓝色:"  
+		            android:textColor="#0000FF"  
+		            android:textSize="24sp" />  
+		  
+		        <SeekBar  
+		            android:id="@+id/sb3"  
+		            android:layout_width="fill_parent"  
+		            android:layout_height="wrap_content"  
+		            android:max="256"  
+		            android:progress="128" />  
+		    </LinearLayout>  
+		  
+		    <LinearLayout  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"  
+		        android:gravity="center_vertical"  
+		        android:orientation="horizontal"  
+		        android:padding="10dp" >  
+		  
+		        <TextView  
+		            android:layout_width="wrap_content"  
+		            android:layout_height="wrap_content"  
+		            android:text="饱和度:"  
+		            android:textColor="#000000"  
+		            android:textSize="16.5sp" />  
+		  
+		        <SeekBar  
+		            android:id="@+id/sb4"  
+		            android:layout_width="fill_parent"  
+		            android:layout_height="wrap_content"  
+		            android:max="256"  
+		            android:progress="128" />  
+		    </LinearLayout>  
+		  
+		    <LinearLayout  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"  
+		        android:gravity="center_vertical"  
+		        android:orientation="horizontal"  
+		        android:padding="10dp" >  
+		  
+		        <TextView  
+		            android:layout_width="wrap_content"  
+		            android:layout_height="wrap_content"  
+		            android:text="透明度:"  
+		            android:textColor="#000000"  
+		            android:textSize="16.5sp" />  
+		  
+		        <SeekBar  
+		            android:id="@+id/sb5"  
+		            android:layout_width="fill_parent"  
+		            android:layout_height="wrap_content"  
+		            android:max="256"  
+		            android:progress="128" />  
+		    </LinearLayout> 
+	    </LinearLayout>
+    </ScrollView>
+	<TextView 
+      	 android:id="@+id/text"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="10dp"
+         android:ellipsize="end"
+         android:singleLine="true"
+         android:textSize="20dp"
+         android:textColor="@color/pinks"
+         android:text="ImageView 处理"
+         android:background="@drawable/text_transparent"/>
+</RelativeLayout>

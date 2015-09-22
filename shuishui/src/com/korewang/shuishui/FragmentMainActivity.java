@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.korewang.shuishui.activitys.FragmentPageFour;
 import com.korewang.shuishui.activitys.FragmentPageOne;
 import com.korewang.shuishui.activitys.FragmentPageThree;
 import com.korewang.shuishui.activitys.FragmentPageTwo;
@@ -31,19 +32,19 @@ public class FragmentMainActivity extends FragmentActivity {
 	   * 
 	   */
 	  private Class mFragmentArray[] = { FragmentPageOne.class,
-			  FragmentPageTwo.class, FragmentPageThree.class};
+			  FragmentPageTwo.class, FragmentPageThree.class,FragmentPageFour.class};
 	  /**
 	   * 存放图片数组
 	   * 
 	   */
 	  private int mImageArray[] = { R.drawable.t_check,
-	      R.drawable.t_linkstagekey, R.drawable.t_index_seriesreport};
+	      R.drawable.t_linkstagekey, R.drawable.t_index_seriesreport, R.drawable.t_claim};
 
 	  /**
 	   * 选修卡文字
 	   * 
 	   */
-	  private String mTextArray[] = { "首页", "消息", "更多" };
+	  private String mTextArray[] = { "首页", "消息", "更多", "图片"};
 	  /**
 	   * 
 	   * 
@@ -67,7 +68,7 @@ public class FragmentMainActivity extends FragmentActivity {
 	    // 得到fragment的个数
 	    int count = mFragmentArray.length;
 	    arrayFrag = getResources().getIntArray(R.array.itemfrag);
-	    count = arrayFrag.length;
+	   // count = arrayFrag.length;
 	    for (int i = 0; i < count; i++) {
 	      // 给每个Tab按钮设置图标、文字和内容
 	      TabSpec tabSpec = mTabHost.newTabSpec(mTextArray[i])

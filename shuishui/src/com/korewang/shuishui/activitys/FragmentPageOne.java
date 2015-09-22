@@ -1,16 +1,16 @@
 package com.korewang.shuishui.activitys;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.korewang.shuishui.R;
 
@@ -18,15 +18,12 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 
 	private View rootView;
 	private Spinner mSpinner;
-	
 	private boolean isFirstIn = true;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		if (rootView == null) {
 			rootView = inflater.inflate(R.layout.fragment_one, null);
-			
-			
 			initSpinner();
 		}
 		ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -83,6 +80,7 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
         }    
         });    
 	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -93,4 +91,5 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 }

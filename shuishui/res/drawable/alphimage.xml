@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >  
+ 
+    <solid android:color="@color/white" />  
+  
+    <stroke  
+        android:width="0.01dp"  
+        android:color="@color/pinks" />  
+  
+    <padding  
+        android:top="10dp"
+        android:bottom="10dp"  
+        android:left="0.5dp"  
+        android:right="0.5dp"/>
+    <!--solid设置填充颜色，颜色值以#80开头表示透明
+		stroke 设置边框宽度，颜色值
+		corners设置圆角
+		padding设置内联组件的边距 
+     -->  
+</shape> 
+
