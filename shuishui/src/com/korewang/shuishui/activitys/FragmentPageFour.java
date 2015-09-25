@@ -8,6 +8,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
 	
 	/*view rgb*/
 	public void initRGB(){
+		int number = Camera.getNumberOfCameras();
+		Log.i("Camera-NO", "摄像头的Number:="+number);
 		mText = (TextView)rootView.findViewById(R.id.text);
 		iv = (ImageView)rootView.findViewById(R.id.iv);  
         sb1 = (SeekBar) rootView.findViewById(R.id.sb1);  
@@ -230,10 +233,10 @@ public class FragmentPageFour extends Fragment implements View.OnClickListener,V
 		switch (v.getId()) {
 		case R.id.text:
 			// reset imageView resource
-			if(bmSql ==R.drawable.wats){
-				bmSql = R.drawable.river;
-			}else if(bmSql ==R.drawable.sock){
+			if(bmSql ==R.drawable.river){
 				bmSql = R.drawable.wats;
+			}else if(bmSql ==R.drawable.sock){
+				bmSql = R.drawable.river;
 			}else{
 				bmSql =R.drawable.sock;
 			}
