@@ -2,6 +2,7 @@ package com.korwang.shuishui.utils;
 
 import com.korewang.shuishui.FragmentMainActivity;
 import com.korewang.shuishui.activitys.BmapActivity;
+import com.korewang.shuishui.activitys.CameraSettingActivity;
 import com.korewang.shuishui.activitys.DownImageActivity;
 import com.korewang.shuishui.activitys.GetGPSActivity;
 import com.korewang.shuishui.activitys.ListAppActivity;
@@ -39,6 +40,11 @@ public class UIControl {
     }
     public static void startFragmentActivity(Context context){
     	Intent intent = new Intent(context,FragmentMainActivity.class);
+    	context.startActivity(intent);
+    }
+    
+    public static void startCameraSettingActivity(Context context){
+    	Intent intent = new Intent(context,CameraSettingActivity.class);
     	context.startActivity(intent);
     }
 }

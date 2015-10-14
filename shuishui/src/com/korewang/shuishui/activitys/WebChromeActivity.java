@@ -41,7 +41,7 @@ public class WebChromeActivity extends Activity implements OnClickListener{
 		HeaderView view = (HeaderView)findViewById(R.id.headerViewweb);
 		view.setHeaderTitle("web");
 		
-		String url = "http://www.baidu.com"; // "file:///android_asset/testloading.html"
+		String url = "https://www.baidu.com"; // "file:///android_asset/testloading.html"
 		_co = (WebView)findViewById(R.id.co);
 		_co.getSettings().setJavaScriptEnabled(true);
 		_co.setWebViewClient(new WebViewClient());

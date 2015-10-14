@@ -31,7 +31,7 @@ import android.widget.ListView;
 public class InitActivity extends Activity {
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite","下载一个图片显示在imageview里","Fragment learning"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","愉快的去玩耍","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet"};
 	
 	
 	@Override
@@ -94,6 +94,8 @@ public class InitActivity extends Activity {
             		UIControl.startDownImageActivity(mContext);
             	}else if(arg2==5){
             		UIControl.startFragmentActivity(mContext);
+            	}else if(arg2==6){
+            		UIControl.startCameraSettingActivity(mContext);
             	}
             }
         });
