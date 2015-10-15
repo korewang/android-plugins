@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.os.Environment;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -77,9 +80,12 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		public void onPictureTaken(byte[] data, Camera camera) {
 			// TODO Auto-generated method stub
 			CameraBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-			File myCaptureFile = new File("/sdcard/camera1.jpg");
+			File myCaptureFile = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "MyCameraApp");
+			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			try{
-				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile + File.separator + timeStamp + ".jpg"));
 				CameraBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
 				bos.flush();
 				bos.close();

@@ -46,6 +46,7 @@ public class CameraSettingActivity extends Activity {
 	/**
 	 设置camera setting
 	 */
+	public static final String LOG_TAG = "CameraSettingActivity";
 	private Camera mCamera;
     private CameraPreview mPreview;
 
@@ -88,7 +89,6 @@ public class CameraSettingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.i("button","click");
 				// get an image from the camera
                 mCamera.takePicture(null, null, mPicture);
 			}
@@ -98,9 +98,8 @@ public class CameraSettingActivity extends Activity {
         mCameraCurrentlyLocked = mDefaultCameraId;
 	}
 	 @Override
-    protected void onResume()
-    {
-        Log.d(AppConstants.LOG_TAG, "onResume");
+    protected void onResume(){
+        Log.d(LOG_TAG, "onResume");
         super.onResume();
 
         // Open the default i.e. the first rear facing camera.
@@ -110,17 +109,15 @@ public class CameraSettingActivity extends Activity {
     }
 
     @Override
-    protected void onPause()
-    {
-        Log.d(AppConstants.LOG_TAG, "onPause");
+    protected void onPause(){
+        Log.d(LOG_TAG, "onPause");
         super.onPause();
 
         // Because the Camera object is a shared resource, it's very
         // important to release it when the activity is paused.
-        if (mCamera != null)
-        {
+        if (mCamera != null){
             mPreview.setCamera(null);
-            Log.d(AppConstants.LOG_TAG, "onPause --> Realease camera");
+            Log.d(LOG_TAG, "onPause --> Realease camera");
             mCamera.release();
             mCamera = null;
         }
@@ -128,11 +125,9 @@ public class CameraSettingActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy()
-    {
-        Log.d(AppConstants.LOG_TAG, "onDestroy");
+    protected void onDestroy(){
+        Log.d(LOG_TAG, "onDestroy");
         super.onDestroy();
-
     }
 
     /**
@@ -140,9 +135,8 @@ public class CameraSettingActivity extends Activity {
      * 
      * @return
      */
-    private int getDefaultCameraId()
-    {
-        Log.d(AppConstants.LOG_TAG, "getDefaultCameraId");
+    private int getDefaultCameraId(){
+        Log.d(LOG_TAG, "getDefaultCameraId");
         int defaultId = -1;
 
         // Find the total number of cameras available
@@ -150,46 +144,35 @@ public class CameraSettingActivity extends Activity {
 
         // Find the ID of the default camera
         CameraInfo cameraInfo = new CameraInfo();
-        for (int i = 0; i < mNumberOfCameras; i++)
-        {
+        for (int i = 0; i < mNumberOfCameras; i++){
             Camera.getCameraInfo(i, cameraInfo);
-            Log.d(AppConstants.LOG_TAG, "camera info: " + cameraInfo.orientation);
-            if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK)
-            {
+            Log.d(LOG_TAG, "camera info: " + cameraInfo.orientation);
+            if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK){
                 defaultId = i;
             }
         }
-        if (-1 == defaultId)
-        {
-            if (mNumberOfCameras > 0)
-            {
+        if (-1 == defaultId){
+            if (mNumberOfCameras > 0){
                 // 如果没有后向摄像头
                 defaultId = 0;
-            }
-            else
-            {
+            }else{
                 // 没有摄像头
-                Toast.makeText(getApplicationContext(), R.string.no_camera,
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.no_camera, Toast.LENGTH_LONG).show();
             }
         }
         return defaultId;
     }
 
     /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(int cameraId)
-    {
-        Log.d(AppConstants.LOG_TAG, "getCameraInstance");
+    public static Camera getCameraInstance(int cameraId){
+        Log.d(LOG_TAG, "getCameraInstance");
         Camera c = null;
-        try
-        {
+        try{
             c = Camera.open(cameraId); // attempt to get a Camera instance
-        }
-        catch (Exception e)
-        {
+        }catch (Exception e){
             // Camera is not available (in use or does not exist)
             e.printStackTrace();
-            Log.e(AppConstants.LOG_TAG, "Camera is not available");
+            Log.e(LOG_TAG, "Camera is not available");
         }
         return c; // returns null if camera is unavailable
     }
@@ -197,101 +180,71 @@ public class CameraSettingActivity extends Activity {
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
     /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(int type)
-    {
-        Log.d(AppConstants.LOG_TAG, "getOutputMediaFile");
+    private static File getOutputMediaFile(int type){
+        Log.d(LOG_TAG, "getOutputMediaFile");
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = null;
-        try
-        {
+        try{
             // This location works best if you want the created images to be
             // shared
             // between applications and persist after your app has been
-            // uninstalled.
-            mediaStorageDir = new File(
-                    Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "MyCameraApp");
-
-            Log.d(AppConstants.LOG_TAG,
-                    "Successfully created mediaStorageDir: " + mediaStorageDir);
-
-        }
-        catch (Exception e)
-        {
+            //此时可以不放到公共文件picture，建入app文件路径下
+//            mediaStorageDir = new File(
+//                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+//                    "MyCameraApp");
+        	String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        	mediaStorageDir = new File(rootPath + File.separator + "/shuishui/MyCameraApp");
+            Log.d(LOG_TAG, "Successfully created mediaStorageDir: " + mediaStorageDir);
+        }catch (Exception e){
             e.printStackTrace();
-            Log.d(AppConstants.LOG_TAG, "Error in Creating mediaStorageDir: "
-                    + mediaStorageDir);
+            Log.d(LOG_TAG, "Error in Creating mediaStorageDir: " + mediaStorageDir);
         }
-
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists())
-        {
-            if (!mediaStorageDir.mkdirs())
-            {
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
                 // 在SD卡上创建文件夹需要权限：
-                Log.d(AppConstants.LOG_TAG,
-                        "failed to create directory, check if you have the WRITE_EXTERNAL_STORAGE permission");
+                Log.d(LOG_TAG, "failed to create directory, check if you have the WRITE_EXTERNAL_STORAGE permission");
                 return null;
             }
         }
 
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-                .format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE)
-        {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
-        }
-        else if (type == MEDIA_TYPE_VIDEO)
-        {
+        if (type == MEDIA_TYPE_IMAGE){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        }else if (type == MEDIA_TYPE_VIDEO){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + "VID_" + timeStamp + ".mp4");
-        }
-        else
-        {
+        }else{
             return null;
         }
 
         return mediaFile;
     }
 
-    private PictureCallback mPicture = new PictureCallback()
-    {
+    private PictureCallback mPicture = new PictureCallback(){
 
         @Override
-        public void onPictureTaken(byte[] data, Camera camera)
-        {
-            Log.d(AppConstants.LOG_TAG, "onPictureTaken");
+        public void onPictureTaken(byte[] data, Camera camera){
+            Log.d(LOG_TAG, "onPictureTaken");
 
             File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            if (pictureFile == null)
-            {
-                Log.d(AppConstants.LOG_TAG,
-                        "Error creating media file, check storage permissions: ");
+            if (pictureFile == null){
+                Log.d(LOG_TAG, "Error creating media file, check storage permissions: ");
                 return;
             }
-
-            try
-            {
+            try{
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
+            }catch (FileNotFoundException e){
+                Log.d(LOG_TAG, "File not found: " + e.getMessage());
+            }catch (IOException e){
+                Log.d(LOG_TAG, "Error accessing file: " + e.getMessage());
             }
-            catch (FileNotFoundException e)
-            {
-                Log.d(AppConstants.LOG_TAG, "File not found: " + e.getMessage());
-            }
-            catch (IOException e)
-            {
-                Log.d(AppConstants.LOG_TAG,
-                        "Error accessing file: " + e.getMessage());
-            }
-
             // 拍照后重新开始预览
             mCamera.stopPreview();
             mCamera.startPreview();
@@ -299,16 +252,13 @@ public class CameraSettingActivity extends Activity {
     };
 
     /** Check if this device has a camera */
-    private boolean checkCameraHardware(Context context)
-    {
+    private boolean checkCameraHardware(Context context){
         if (context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA))
         {
             // this device has a camera
             return true;
-        }
-        else
-        {
+        }else{
             // no camera on this device
             return false;
         }
@@ -332,6 +282,4 @@ public class CameraSettingActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 }
-class AppConstants{
-	 public static final String LOG_TAG = "CameraSetting";
-}
+
