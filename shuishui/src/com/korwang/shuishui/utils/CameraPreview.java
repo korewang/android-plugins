@@ -125,13 +125,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
             parameters.setRotation(90);
+            parameters.setGpsLongitude(35.112);
+            parameters.setGpsLatitude(114.112);
             requestLayout();
-
             mCamera.setParameters(parameters);
-            mCamera.setDisplayOrientation(90);            
+            mCamera.setDisplayOrientation(90); 
             Log.d(LOG_TAG, "camera set parameters successfully!: " + parameters);
         }
-        // 这里可以用来设置尺寸
 
         // start preview with new settings
         try{

@@ -1,7 +1,22 @@
 package com.korewang.shuishui.activitys;
 
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.annotation.Target;
+
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,18 +36,29 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 	private View rootView;
 	private Spinner mSpinner;
 	private boolean isFirstIn = true;
+	private Button mSelectImg;
+	private ImageView mImage;
+	private static final int RESULT = 1;
+	private final String IMAGE_TYPE = "image/*";
+	Target target;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		if (rootView == null) {
 			rootView = inflater.inflate(R.layout.fragment_one, null);
 			initSpinner();
+			initView();
 		}
 		ViewGroup parent = (ViewGroup) rootView.getParent();
 		if (parent != null) {
 			parent.removeView(rootView);
 		}
 		return rootView;
+	}
+	public void initView(){
+		mSelectImg = (Button)rootView.findViewById(R.id.selectpic);
+		mImage = (ImageView)rootView.findViewById(R.id.resultimg);
+		mSelectImg.setOnClickListener(this);
 	}
 	public void initSpinner(){
 		mSpinner = (Spinner)rootView.findViewById(R.id.spinner);
@@ -80,11 +108,110 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
         }    
         });    
 	}
-	
+	 private void showPhoto(ImageView photo,String ipath){  
+	       /* String picturePath = target.getInfo(Target.TargetPhotoPath);  
+	        if(picturePath.equals(""))  
+	            return;*/
+		 	String picturePath = ipath;
+		 	File file = new File(picturePath);
+		 	if(!file.exists()){
+		 		return;
+		 	}
+	        // 缩放图片, width, height 按相同比例缩放图片  
+	        BitmapFactory.Options options = new BitmapFactory.Options();  
+	        // options 设为true时，构造出的bitmap没有图片，只有一些长宽等配置信息，但比较快，设为false时，才有图片  
+	        options.inJustDecodeBounds = true;  
+	        Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);  
+	        int scale = (int)( options.outWidth / (float)300);  
+	        if(scale <= 0)  
+	            scale = 1;  
+	        options.inSampleSize = scale;  
+	        options.inJustDecodeBounds = false;  
+	        bitmap = BitmapFactory.decodeFile(picturePath, options);  
+	          
+	        photo.setImageBitmap(bitmap);  
+	        photo.setMaxHeight(350);  
+	    }  
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {  
+        // TODO Auto-generated method stub  
+        super.onActivityResult(requestCode, resultCode, data); 
+        
+        if(requestCode == RESULT && resultCode == getActivity().RESULT_OK && data != null){  
+              
+        	Uri uri = data.getData();  //此处的地址是数据库映射地址
+            ContentResolver cr = getActivity().getContentResolver();  
+            String[] proj = { MediaStore.Images.Media.DATA };
+            Cursor actualimagecursor = getActivity().managedQuery(uri, proj, null, null,null);
+            int actual_image_column_index = actualimagecursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            actualimagecursor.moveToFirst();
+            String img_path = actualimagecursor
+                .getString(actual_image_column_index);
+            Toast.makeText(getActivity(), img_path, Toast.LENGTH_LONG).show();
+            //getbBitmapAvailable(img_path);
+            showPhoto(mImage,img_path);
+            try {  
+                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
+                int iwidth = bitmap.getWidth();
+                int iheight = bitmap.getHeight();
+                int imageViewSize = bitmap.getRowBytes();
+                int ld = bitmap.getDensity();
+                mImage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {  
+                Log.e("Exception", e.getMessage(),e);  
+            }  
+            /*
+             * 目前Android SDK定义的Tag有:
+            TAG_DATETIME 时间日期
+            TAG_FLASH 闪光灯
+            TAG_GPS_LATITUDE 纬度
+            TAG_GPS_LATITUDE_REF 纬度参考 
+            TAG_GPS_LONGITUDE 经度
+            TAG_GPS_LONGITUDE_REF 经度参考 
+            TAG_IMAGE_LENGTH 图片长
+            TAG_IMAGE_WIDTH 图片宽
+            TAG_MAKE 设备制造商
+            TAG_MODEL 设备型号
+            TAG_ORIENTATION 方向
+            TAG_WHITE_BALANCE 白平衡
+            */ 
+            try {
+                //android读取图片EXIF信息
+                ExifInterface exifInterface=new ExifInterface(img_path);
+                String smodel=exifInterface.getAttribute(ExifInterface.TAG_MODEL);
+                String width=exifInterface.getAttribute(ExifInterface.TAG_IMAGE_WIDTH);
+                String height=exifInterface.getAttribute(ExifInterface.TAG_IMAGE_LENGTH);
+                String longitude=exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+                Toast.makeText(getActivity(), smodel+"  "+width+"*"+height
+                		+ "longitude"+longitude, Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }  
+    }  
+	public void getbBitmapAvailable(String path){
+		String myPath = path;
+		 File file = new File(myPath);
+		 long imageLength = file.length();
+		 Toast.makeText(getActivity(), "getbBitmapAvailable"+myPath, Toast.LENGTH_LONG).show();
+	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
+		switch (v.getId()) {
+		case R.id.selectpic:
+			Log.i("R.id.selectpic", "R.id.selectpic");
+//			 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);  
+//             startActivityForResult(intent, RESULT);  
+             Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+             getAlbum.setType(IMAGE_TYPE);
+             startActivityForResult(getAlbum, RESULT);
+			break;
+
+		default:
+			break;
+		}
 	}
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {

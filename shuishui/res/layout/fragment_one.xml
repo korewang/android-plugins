@@ -18,6 +18,23 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="40dp"
 	        android:layout_marginTop="40dp"/>
-   
 
+    <Button
+        android:id="@+id/selectpic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spinner"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:text="相册选图" />
+
+    <ImageView
+        android:id="@+id/resultimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/selectpic"
+        android:layout_below="@+id/selectpic"
+        android:src="@android:drawable/alert_dark_frame" />
+	
 </RelativeLayout>
