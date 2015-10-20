@@ -3,7 +3,7 @@ package com.korewang.shuishui.activitys;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.annotation.Target;
 
 import android.content.ContentResolver;
@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -148,19 +149,15 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
             actualimagecursor.moveToFirst();
             String img_path = actualimagecursor
                 .getString(actual_image_column_index);
-            Toast.makeText(getActivity(), img_path, Toast.LENGTH_LONG).show();
-            //getbBitmapAvailable(img_path);
             showPhoto(mImage,img_path);
-            try {  
-                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
-                int iwidth = bitmap.getWidth();
-                int iheight = bitmap.getHeight();
-                int imageViewSize = bitmap.getRowBytes();
-                int ld = bitmap.getDensity();
-                mImage.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {  
-                Log.e("Exception", e.getMessage(),e);  
-            }  
+            
+            int degree = readPictureDegree(img_path); 
+            BitmapFactory.Options opts=new BitmapFactory.Options();//获取缩略图显示到屏幕上
+            opts.inSampleSize=2;
+            Bitmap cbitmap=BitmapFactory.decodeFile(img_path,opts);
+            Bitmap newbitmap = rotaingImageView(degree, cbitmap);  
+            mImage.setImageBitmap(newbitmap);
+           
             /*
              * 目前Android SDK定义的Tag有:
             TAG_DATETIME 时间日期
@@ -190,25 +187,46 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
             }
         }  
     }  
-	public void getbBitmapAvailable(String path){
-		String myPath = path;
-		 File file = new File(myPath);
-		 long imageLength = file.length();
-		 Toast.makeText(getActivity(), "getbBitmapAvailable"+myPath, Toast.LENGTH_LONG).show();
-	}
+	public static int readPictureDegree(String path) {
+        int degree  = 0;
+        try {
+                ExifInterface exifInterface = new ExifInterface(path);
+                int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                        degree = 90;
+                        break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                        degree = 180;
+                        break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                        degree = 270;
+                        break;
+                }
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
+        return degree;
+    }
+	public static Bitmap rotaingImageView(int angle , Bitmap bitmap) {  
+	       //旋转图片 动作   
+	       Matrix matrix = new Matrix();
+	       matrix.postRotate(angle);  
+	       // 创建新的图片   
+	       Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,  
+	               bitmap.getWidth(), bitmap.getHeight(), matrix, true);  
+	       return resizedBitmap;  
+    }
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.selectpic:
 			Log.i("R.id.selectpic", "R.id.selectpic");
-//			 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);  
-//             startActivityForResult(intent, RESULT);  
-             Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
-             getAlbum.setType(IMAGE_TYPE);
-             startActivityForResult(getAlbum, RESULT);
+            Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+            getAlbum.setType(IMAGE_TYPE);
+            startActivityForResult(getAlbum, RESULT);
 			break;
-
 		default:
 			break;
 		}
