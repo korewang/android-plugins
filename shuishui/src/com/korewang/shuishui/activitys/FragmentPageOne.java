@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -60,6 +63,17 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 		mSelectImg = (Button)rootView.findViewById(R.id.selectpic);
 		mImage = (ImageView)rootView.findViewById(R.id.resultimg);
 		mSelectImg.setOnClickListener(this);
+		mImage.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				ImageView mImage =  (ImageView)v;
+				 AnimationDrawable ad = (AnimationDrawable)mImage.getDrawable();
+				 ad.stop();
+				 ad.start();
+				return true;
+			}
+		});
 	}
 	public void initSpinner(){
 		mSpinner = (Spinner)rootView.findViewById(R.id.spinner);
@@ -234,7 +248,8 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
-		return false;
+		 
+		return true;
 	}
 	
 }

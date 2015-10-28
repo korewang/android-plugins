@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:visible="true"
+    android:oneshot="true">
+    <item android:drawable="@drawable/white_cicrle"
+        android:duration="250" />
+	<item android:drawable="@drawable/gray_cicrle"
+	        android:duration="250" />
+	<item android:drawable="@drawable/black_cicrle"
+	        android:duration="250" />
+	<item android:drawable="@drawable/red_cicrle"
+	        android:duration="250" />
+</animation-list>

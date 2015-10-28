@@ -35,6 +35,17 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/selectpic"
         android:layout_below="@+id/selectpic"
-        android:src="@android:drawable/alert_dark_frame" />
+        android:src="@drawable/ovalanimation" />
+
+    <EditText
+        android:id="@+id/numberIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/resultimg"
+        android:layout_below="@+id/resultimg"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="number" >
+    </EditText>
 	
 </RelativeLayout>
