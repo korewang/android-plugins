@@ -7,10 +7,11 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-
+	<!-- key com.korewang.shuishui -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 访问网络状态的权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 访问WIFI网络状态的权限 -->
@@ -28,7 +29,12 @@
 	<!--  camera open-->
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-feature android:name="android.hardware.camera" />
-	
+	<!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- 移除快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <!-- 查询快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <application
         android:name=".application.Applications"
         android:allowBackup="true"

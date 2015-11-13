@@ -23,20 +23,27 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="downBTN" />
+	        android:text="down" />
+
+	    <Button
+	        android:id="@+id/DownSD"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="downsd" />
 
 	    <Button
 	        android:id="@+id/GetBatteryMSG"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="GetBatMSG" />
+	        android:text="BatMSG" />
 	    <Button
 	        android:id="@+id/ScanWifi"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="ScanWifi" />
+	        android:text="SWifi" />
 
 	</LinearLayout>
 	<EditText
@@ -51,8 +58,16 @@
 
 	<ImageView
 	    android:id="@+id/showImage"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
+	    android:layout_width="100dp"
+	    android:layout_height="100dp"
 	    android:layout_gravity="center_horizontal" />
+
+	<ProgressBar
+	    android:id="@+id/progressBarh"
+	    style="?android:attr/progressBarStyleHorizontal"
+	    android:max="100"
+	    android:progress="3"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" />
 
 </LinearLayout>

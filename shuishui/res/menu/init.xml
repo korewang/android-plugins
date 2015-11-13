@@ -6,6 +6,26 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/on_item0" />
+    <item
+        android:id="@+id/on_item1"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/on_item1" />
+    <item
+        android:id="@+id/on_item2"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/on_item2" />
+    <item
+        android:id="@+id/on_item3"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/on_item3" />
+    <item
+        android:id="@+id/on_item4"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/on_item4" />
 
 </menu>

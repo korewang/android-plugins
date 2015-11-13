@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">shuishui</string>
+    <string name="app_name">水水</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    
     <string name="title_activity_list_app">ListAppActivity</string>
     <string name="title_activity_get_gps">GetGPSActivity</string>
     <string name="title_activity_bmap">BmapActivity</string>
@@ -16,4 +16,12 @@
 	<string name="no_camera">没有相机</string>
 	<string name="capture">拍照</string>
 	<string name="changeshine">切换平衡光</string>
+	<!-- 选项菜单 -->
+	<string name="on_item0">Onitem-0</string>
+	<string name="on_item1">Onitem-1</string>
+	<string name="on_item2">Onitem-2</string>
+	<string name="on_item3">Onitem-3</string>
+	<string name="on_item4">Onitem-4</string>
+	<string name="on_item5">Onitem-5</string>
+    <string name="action_settings">SETTING</string>
 </resources>

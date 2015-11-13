@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Target;
 
+import android.animation.ObjectAnimator;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -63,6 +64,9 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 		mSelectImg = (Button)rootView.findViewById(R.id.selectpic);
 		mImage = (ImageView)rootView.findViewById(R.id.resultimg);
 		mSelectImg.setOnClickListener(this);
+		ObjectAnimator animation = ObjectAnimator.ofFloat(mSelectImg, View.ALPHA, 0f,1f);
+		animation.setDuration(500);
+		animation.start();
 		mImage.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -103,7 +107,7 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
         };   
         //为下拉列表绑定事件监听器   
         mSpinner.setOnItemSelectedListener(listenerIO); 
-         mSpinner.setSelection(2, true); //默认选择的
+        mSpinner.setSelection(2, true); //默认选择的
         
         /*下拉菜单弹出的内容选项触屏事件处理*/    
         mSpinner.setOnTouchListener(new Spinner.OnTouchListener(){    

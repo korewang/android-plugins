@@ -105,17 +105,17 @@ public class AppListAdapter extends BaseAdapter {
              
             @Override
             public void onClick(View v) {
-              //  showInfo(selectedID);  
+            	//  showInfo(selectedID);  
                // SchemeBackend.getInfo(selectedID);
-           	 Log.i("3#","id"+selectedID);
-           	 Toast.makeText(context, "包名：" + 
-           			 				(String)appList.get(selectedID).packageName + 
-           			 				"版本号：" + 
-           			 				(String)appList.get(selectedID).versionName, Toast.LENGTH_SHORT).show();
-           //	 Log.i("appList.get(position).appIcon", appList.get(selectedID).appIcon);
-         	Intent mintent = new Intent("my.action");
-	    	mintent.putExtra("app_id", selectedID+"");
-	        context.sendBroadcast(mintent);
+	           	 Log.i("3#","id"+selectedID);
+	           	 Toast.makeText(context, "包名：" + 
+	           			 				(String)appList.get(selectedID).packageName + 
+	           			 				"版本号：" + 
+	           			 				(String)appList.get(selectedID).versionName, Toast.LENGTH_SHORT).show();
+	           //	 Log.i("appList.get(position).appIcon", appList.get(selectedID).appIcon);
+	         	Intent mintent = new Intent("my.action");
+		    	mintent.putExtra("app_id", selectedID+"");
+		        context.sendBroadcast(mintent);
         	
             }
         });

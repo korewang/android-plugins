@@ -1,5 +1,15 @@
 package com.korewang.shuishui.activitys;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -8,6 +18,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.baidu.navisdk.ui.routeguide.subview.O;
 import com.korewang.shuishui.R;
 import com.korewang.shuishui.R.id;
 import com.korewang.shuishui.R.layout;
@@ -20,36 +31,50 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class DownImageActivity extends Activity implements View.OnClickListener{
 
 	private static final String TAG = "DownImageActivity";
 	private Context context;
-	private Button downBtn,GetBatteryMSG,Scanwifi;
+	private Button downBtn,GetBatteryMSG,Scanwifi,downsdCard;
 	private EditText  inputText;
 	private ImageView showImageV;
 	
 	private ProgressDialog dialog;
+	private ProgressBar progressBarh;
 	//建立一个hander  生命hander为静态的
 //	private static Handler handler = new Handler();
+	 private MediaPlayer mediaPlayer;
+	 private static final float BEEP_VOLUME = 0.10f;
+	 private boolean  playBeep;
+     private boolean vibrate;
 	private static int IS_FINISH = 1;
 	private String image_path = null;
 	
@@ -59,6 +84,11 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
     private int BatteryS;  		//电量的总刻度
     private String BatteryStatus;   //电池状态  
     private String BatteryTemp;     //电池使用情况  
+    private int FileLength;
+    private int DownedFileLength=0;
+    private URLConnection connection;
+    private OutputStream outputStream;
+    private InputStream inputStream;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +100,13 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 		showImageV = (ImageView)findViewById(R.id.showImage);
 		GetBatteryMSG = (Button)findViewById(R.id.GetBatteryMSG);
 		Scanwifi = (Button)findViewById(R.id.ScanWifi);
+		progressBarh = (ProgressBar)findViewById(R.id.progressBarh);
+		downsdCard = (Button)findViewById(R.id.DownSD);
 		HeaderView view = (HeaderView)findViewById(R.id.headerDownView);
 		view.setHeaderTitle("DOWN_image");
 		GetBatteryMSG.setOnClickListener(this);
 		Scanwifi.setOnClickListener(this);
+		initDialog();
 		downBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -89,9 +122,145 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 				new Thread(new MyThread()).start();
 			}
 		});
-		initDialog();
+		downsdCard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				DownedFileLength=0;
+				image_path = inputText.getText().toString();
+				//downBtn.setText("DownBTN");
+				if(image_path.length() <8){
+					image_path = "http://www.baidu.com/img/bdlogo.png";
+					
+				}
+				dialog.show();
+				Thread thread = new Thread(){
+					public void run(){
+						try{
+							DownSDFile(image_path);
+						}catch(Exception e){
+							 e.printStackTrace();
+						}
+					}
+				};
+				thread.start();
+			}
+		});
+		
 	}
-	
+	public void DownSDFile(String path){
+		/*
+         * 连接到服务器
+         */
+         
+        try {
+             URL url=new URL(path);
+             connection=url.openConnection();
+             if (connection.getReadTimeout()==5) {
+                Log.i("---------->", "当前网络有问题");
+                // return;
+               }
+             inputStream=connection.getInputStream();
+             
+        } catch (MalformedURLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+         
+        /*
+         * 文件的保存路径和和文件名其中pci是在手机SD卡上要保存的路径，如果不存在则新建
+         */
+        String savePAth=Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp";
+        File file1=new File(savePAth);
+        if (!file1.exists()) {
+            file1.mkdir();
+        }
+        String pathAry[] = path.split("/");
+        String filename = pathAry[pathAry.length-1];
+        String savePathString=Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp/"+filename;
+        File file =new File(savePathString);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }  
+        }
+        /*
+         * 向SD卡中写入文件,用Handle传递线程
+         */
+        Message message=new Message();
+        
+        try {
+            outputStream=new FileOutputStream(file);
+          //  byte [] buffer=new byte[1024*4];
+            byte [] bytes = new byte[1024];
+            FileLength=connection.getContentLength();
+            message.what=0;
+            
+            handlersd.sendMessage(message);
+            int len = -1;
+            while (DownedFileLength<FileLength) {
+            //while((DownedFileLength=inputStream.read(bytes))!= -1){
+              //  outputStream.write(buffer);
+              //  DownedFileLength+=inputStream.read(buffer);
+               
+                outputStream.write(bytes, 0, len);
+                outputStream.flush();
+                DownedFileLength+=inputStream.read(bytes);
+                Log.i("-------->", DownedFileLength+"");
+                Message message1=new Message();
+                message1.what=1;
+                handlersd.sendMessage(message1);
+            }
+            inputStream.close();
+            outputStream.close();
+            Message message2=new Message();
+            message2.what=2;
+            handlersd.sendMessage(message2);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	}
+	private Handler handlersd=new Handler()
+    {
+         public void handleMessage(Message msg)
+        {
+        if (!Thread.currentThread().isInterrupted()) {
+            switch (msg.what) {
+            case 0:
+                progressBarh.setMax(FileLength);
+                Log.i("文件长度----------->", progressBarh.getMax()+""); 
+                break;
+            case 1:
+            	progressBarh.setProgress(DownedFileLength);
+                int x=DownedFileLength*100/FileLength;
+                //textView.setText(x+"%");
+                dialog.setMessage("已下载 "+x+"%，请稍后...");
+                
+                break;
+            case 2:
+                Toast.makeText(getApplicationContext(), "下载完成", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                break;
+                 
+            default:
+                break;
+            }
+        }  
+        }
+          
+    };
+  
 	@Override
 	 public void onClick(View v){
 		switch (v.getId()) {
@@ -109,14 +278,34 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 			WifiManager wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);  
 			List<ScanResult> wifiList = wm.getScanResults();  
 			for (int i = 0; i < wifiList.size(); i++) {  
-			ScanResult result = wifiList.get(i);  
-			Log.d("wifi===========", "level="+result.level+"ssid="+result.SSID+"bssid=" + result.BSSID);  
+				ScanResult result = wifiList.get(i);  
+				Log.d("wifi===========", "level="+result.level+"ssid="+result.SSID+"bssid=" + result.BSSID);  
 			}  
+			playBeepSoundAndVibrate();
 			break;
 		default:
 			break;
 		}
 	}
+	@Override
+    public void onResume() {
+        super.onResume();
+        /*
+         * getRingerMode() ——返回当前的铃声模式。
+         * 如RINGER_MODE_NORMAL（普通）、
+         * 	RINGER_MODE_SILENT（静音）、
+         * 	RINGER_MODE_VIBRATE（震动）
+         * 这样子做的bug还是有的
+         * */
+        playBeep = true;
+        AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            playBeep = false;
+        }
+        initBeepSound();
+        vibrate = true;
+
+    }
 	private void initDialog(){
 		dialog = new ProgressDialog(context);
 		dialog.setTitle("提示");
@@ -128,6 +317,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
         @Override
         public void handleMessage(Message msg) {            
             // 判断消息码是否为1
+        	
             if(msg.what==IS_FINISH){
                 byte[] data=(byte[])msg.obj;
                 Bitmap bmp=BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -146,6 +336,11 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
     	            HttpResponse httpResponse = null;
 	    	            try {
 	    	                httpResponse = httpClient.execute(httpGet);
+	    	               /* Message m0 = new Message();
+	    	                
+	    	                m0.what=0;
+	    	                handler.sendMessage(m0);*/
+	    	               
 	    	                if (httpResponse.getStatusLine().getStatusCode() == 200) {
 	    	                    byte[] data = EntityUtils.toByteArray(httpResponse
 	    	                            .getEntity());
@@ -154,8 +349,8 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 	    	                    msg.obj = data;
 	    	                    msg.what = IS_FINISH;
 	    	                    // 发送这个消息到消息队列中
-	    	                    //handler.sendMessage(msg);
-	    	                    handler.sendMessageDelayed(msg, 5000);
+	    	                    handler.sendMessage(msg);
+	    	                   // handler.sendMessageDelayed(msg, 5000);
 	    	                }
 	    	            } catch (Exception e) {
 	    	                e.printStackTrace();
@@ -249,7 +444,48 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+	private static final long VIBRATE_DURATION = 200L;
+	private void playBeepSoundAndVibrate() {
+        
+		if (playBeep && mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+       
+		if (vibrate) {
+            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            vibrator.vibrate(VIBRATE_DURATION);
+        }
+    }
+	 private void initBeepSound() {
+	        if (playBeep && mediaPlayer == null) {
+	            // The volume on STREAM_SYSTEM is not adjustable, and users found it
+	            // too loud,
+	            // so we now play on the music stream.
+	            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+	            mediaPlayer = new MediaPlayer();
+	            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+	            mediaPlayer.setOnCompletionListener(beepListener);
+
+	            AssetFileDescriptor file = getResources().openRawResourceFd(
+	                    R.raw.beep);
+	            try {
+	                mediaPlayer.setDataSource(file.getFileDescriptor(),
+	                        file.getStartOffset(), file.getLength());
+	                file.close();
+	                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+	                mediaPlayer.prepare();
+	            } catch (IOException e) {
+	                mediaPlayer = null;
+	            }
+	        }
+	 }
+	 /**
+	     * When the beep has finished playing, rewind to queue up another one.
+	     */
+	    private final OnCompletionListener beepListener = new OnCompletionListener() {
+	        public void onCompletion(MediaPlayer mediaPlayer) {
+	            mediaPlayer.seekTo(0);
+	        }
+	    };
 	
 }
