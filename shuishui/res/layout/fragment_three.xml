@@ -17,8 +17,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/text"
-        android:layout_below="@+id/text"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="60dp"
         android:text="phoneinfo" />
+
+	<EditText
+	    android:id="@+id/EditTextwifi"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/myPhoneInfo"
+	    android:layout_below="@+id/myPhoneInfo"
+	    android:layout_marginTop="65dp"
+	    android:ems="10"
+	    android:hint="ip" />
+
+	<ToggleButton
+	    android:id="@+id/toggleButton1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/myPhoneInfo"
+	    android:layout_below="@+id/text"
+	    android:layout_marginLeft="19dp"
+	    android:text="ToggleButton" />
 
 </RelativeLayout>

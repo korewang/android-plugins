@@ -1,5 +1,7 @@
 package com.korewang.shuishui.activitys;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,12 +9,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,6 +30,7 @@ import com.korewang.shuishui.R.id;
 import com.korewang.shuishui.R.layout;
 import com.korewang.shuishui.R.menu;
 import com.korewang.shuishui.widget.HeaderView;
+import com.korwang.shuishui.utils.FileDownloadThread;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -37,6 +44,7 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
@@ -107,6 +115,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 		GetBatteryMSG.setOnClickListener(this);
 		Scanwifi.setOnClickListener(this);
 		initDialog();
+		new Thread(connectNet).start(); 
 		downBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -145,10 +154,294 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 					}
 				};
 				thread.start();
+				
+				//new Thread(saveFileRunnable).start(); 
+				//doDownload(); //apk
 			}
 		});
 		
 	}
+	/*
+	 * down apk
+	 * */
+	 /** 
+     * 使用Handler更新UI界面信息 
+     */  
+    
+    Handler mHandler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+  
+            progressBarh.setProgress(msg.getData().getInt("size"));  
+  
+            float temp = (float) progressBarh.getProgress()  
+                    / (float) progressBarh.getMax();  
+  
+            int progress = (int) (temp * 100);  
+            if (progress == 100) {  
+                Toast.makeText(DownImageActivity.this, "下载完成！", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                
+                File mFile = new File(msg.getData().getString("uri"));
+            	Intent install = new Intent();
+            	install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	install.setAction(android.content.Intent.ACTION_VIEW);
+            	install.setDataAndType(Uri.fromFile(mFile),
+            	"application/vnd.android.package-archive");
+            	startActivity(install);
+            }  
+            dialog.setMessage("下载进度:" + progress + " %");
+        }  
+    }; 
+	 /** 
+     * 下载准备工作，获取SD卡路径、开启线程 
+     */  
+    private void doDownload() {  
+        // 获取SD卡路径  
+        String path = Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp/";  
+        File file = new File(path);  
+        // 如果SD卡目录不存在创建  
+        if (!file.exists()) {  
+            file.mkdir();  
+        }  
+        // 设置progressBar初始化  
+        progressBarh.setProgress(0);  
+  
+        // 简单起见，我先把URL和文件名称写死，其实这些都可以通过HttpHeader获取到  
+        String downloadUrl = "http://msoftdl.360.cn/360batterydoctor/360BatteryDoctor_offical.apk";  
+        String fileName = "360BatteryDoctor_offical.apk";  
+        int threadNum = 5;  
+        String filepath = path + fileName;  
+        Log.d(TAG, "download file  path:" + filepath);  
+        downloadTask task = new downloadTask(downloadUrl, threadNum, filepath);  
+        task.start();  
+    }  
+  
+    /** 
+     * 多线程文件下载 
+     *  
+     * @author 
+     * @2014-8-7 
+     */  
+    class downloadTask extends Thread {  
+        private String downloadUrl;// 下载链接地址  
+        private int threadNum;// 开启的线程数  
+        private String filePath;// 保存文件路径地址  
+        private int blockSize;// 每一个线程的下载量  
+  
+        public downloadTask(String downloadUrl, int threadNum, String fileptah) {  
+            this.downloadUrl = downloadUrl;  
+            this.threadNum = threadNum;  
+            this.filePath = fileptah;  
+        }  
+  
+        @Override  
+        public void run() {  
+  
+            FileDownloadThread[] threads = new FileDownloadThread[threadNum];  
+            try {  
+                URL url = new URL(downloadUrl);  
+                Log.d(TAG, "download file http path:" + downloadUrl);  
+                URLConnection conn = url.openConnection();  
+                // 读取下载文件总大小  
+                int fileSize = conn.getContentLength();  
+                if (fileSize <= 0) {  
+                    System.out.println("读取文件失败");  
+                    return;  
+                }  
+                // 设置ProgressBar最大的长度为文件Size  
+                progressBarh.setMax(fileSize);  
+  
+                // 计算每条线程下载的数据长度  
+                blockSize = (fileSize % threadNum) == 0 ? fileSize / threadNum  
+                        : fileSize / threadNum + 1;  
+  
+                Log.d(TAG, "fileSize:" + fileSize + "  blockSize:");  
+  
+                File file = new File(filePath);  
+                for (int i = 0; i < threads.length; i++) {  
+                    // 启动线程，分别下载每个线程需要下载的部分  
+                    threads[i] = new FileDownloadThread(url, file, blockSize,  
+                            (i + 1));  
+                    threads[i].setName("Thread:" + i);  
+                    threads[i].start();  
+                }  
+  
+                boolean isfinished = false;  
+                int downloadedAllSize = 0;  
+                while (!isfinished) {  
+                    isfinished = true;  
+                    // 当前所有线程下载总量  
+                    downloadedAllSize = 0;  
+                    for (int i = 0; i < threads.length; i++) {  
+                        downloadedAllSize += threads[i].getDownloadLength();  
+                        if (!threads[i].isCompleted()) {  
+                            isfinished = false;  
+                        }  
+                    }  
+                    // 通知handler去更新视图组件  
+                    Message msg = new Message();  
+                    msg.getData().putInt("size", downloadedAllSize);  
+                    msg.getData().putString("uri", filePath);
+                    mHandler.sendMessage(msg);  
+                    // Log.d(TAG, "current downloadSize:" + downloadedAllSize);  
+                    Thread.sleep(1000);// 休息1秒后再读取下载进度  
+                }  
+                Log.d(TAG, " all of downloadSize:" + downloadedAllSize);  
+  
+            } catch (MalformedURLException e) {  
+                e.printStackTrace();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            } catch (InterruptedException e) {  
+                e.printStackTrace();  
+            }  
+  
+        }  
+    }  
+	
+	/*
+	 * down apk end
+	 * */
+	/*
+	 * add
+	 * */
+	 private Bitmap mBitmap;  
+	    private String mFileName;  
+	    private String mSaveMessage; 
+	    private final static String ALBUM_PATH   =Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp/";// = Environment.getExternalStorageDirectory() + "/download_test/";
+	    
+	    /** 
+	     * Get image from newwork 
+	     * @param path The path of image 
+	     * @return byte[] 
+	     * @throws Exception 
+	     */  
+	    public byte[] getImage(String path) throws Exception{  
+	        URL url = new URL(path);  
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();  
+	        conn.setConnectTimeout(5 * 1000);  
+	        conn.setRequestMethod("GET");  
+	        InputStream inStream = conn.getInputStream();  
+	        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){  
+	            return readStream(inStream);  
+	        }  
+	        return null;  
+	    }  
+	  
+	    
+	    public static byte[] readStream(InputStream inStream) throws Exception{  
+	        ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
+	        byte[] buffer = new byte[1024];  
+	        int len = 0;  
+	        while( (len=inStream.read(buffer)) != -1){  
+	            outStream.write(buffer, 0, len);  
+	        }  
+	        outStream.close();  
+	        inStream.close();  
+	        return outStream.toByteArray();  
+	    }  
+	private Runnable saveFileRunnable = new Runnable(){  
+        @Override  
+        public void run() {  
+            try {  
+                saveFile(mBitmap, mFileName);  
+                mSaveMessage = "图片保存成功！";  
+            } catch (IOException e) {  
+                mSaveMessage = "图片保存失败！";  
+                e.printStackTrace();  
+            }  
+            messageHandler.sendMessage(messageHandler.obtainMessage());  
+        }  
+  
+    };  
+    private Handler messageHandler = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            dialog.dismiss();  
+            Log.d(TAG, mSaveMessage);  
+           // Toast.makeText(IcsTestActivity.this, mSaveMessage, Toast.LENGTH_SHORT).show();  
+        }  
+    };  
+    /** 
+     * 保存文件 
+     * @param bm 
+     * @param fileName 
+     * @throws IOException 
+     */  
+    public void saveFile(Bitmap bm, String fileName) throws IOException {  
+        File dirFile = new File(ALBUM_PATH);  
+        if(!dirFile.exists()){  
+            dirFile.mkdir();  
+        }  
+        File myCaptureFile = new File(ALBUM_PATH + fileName);  
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));  
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);  
+        bos.flush();  
+        bos.close();  
+    }  
+    
+    /** 
+     * Get image from newwork 
+     * @param path The path of image 
+     * @return InputStream 
+     * @throws Exception 
+     */  
+    public InputStream getImageStream(String path) throws Exception{  
+        URL url = new URL(path);  
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();  
+        conn.setConnectTimeout(5 * 1000);  
+        conn.setRequestMethod("GET");  
+        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){  
+            return conn.getInputStream();  
+        }  
+        return null;  
+    }  
+    private Runnable connectNet = new Runnable(){  
+        @Override  
+        public void run() {  
+            try {  
+                String filePath = "http://img.my.csdn.net/uploads/201402/24/1393242467_3999.jpg";  
+                mFileName = "test.jpg";  
+  
+                //以下是取得图片的两种方法  
+                //////////////// 方法1：取得的是byte数组, 从byte数组生成bitmap  
+                byte[] data = getImage(filePath);  
+                if(data!=null){  
+                    mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);// bitmap  
+                }else{  
+                   // Toast.makeText(IcsTestActivity.this, "Image error!", 1).show();  
+                }  
+                ////////////////////////////////////////////////////////  
+  
+                //******** 方法2：取得的是InputStream，直接从InputStream生成bitmap ***********/  
+              //  mBitmap = BitmapFactory.decodeStream(getImageStream(filePath));  
+                //********************************************************************/  
+  
+                // 发送消息，通知handler在主线程中更新UI  
+               // connectHanlder.sendEmptyMessage(0);  
+                Log.d(TAG, "set image ...");  
+            } catch (Exception e) {  
+              //  Toast.makeText(,"无法链接网络！", 1).show();  
+                e.printStackTrace();  
+            }  
+  
+        }  
+  
+    };  
+    private Handler connectHanlder = new Handler() {  
+        @Override  
+        public void handleMessage(Message msg) {  
+            Log.d(TAG, "display image");  
+            // 更新UI，显示图片  
+            if (mBitmap != null) {  
+              //  mImageView.setImageBitmap(mBitmap);// display image  
+            }  
+        }  
+    };  
+	/*
+	 * add end 
+	 * */
 	public void DownSDFile(String path){
 		/*
          * 连接到服务器
@@ -174,7 +467,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
         /*
          * 文件的保存路径和和文件名其中pci是在手机SD卡上要保存的路径，如果不存在则新建
          */
-        String savePAth=Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp";
+        String savePAth=Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp/";
         File file1=new File(savePAth);
         if (!file1.exists()) {
             file1.mkdir();
@@ -184,7 +477,9 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
         String savePathString=Environment.getExternalStorageDirectory()+"/shuishui/MyCameraApp/"+filename;
         File file =new File(savePathString);
         if (!file.exists()) {
-            try {
+           
+        	 try {
+        		 ///.createNewFile(); 在win dow 系统可用，但是在Linux系统中不存在使用
                 file.createNewFile();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -196,40 +491,61 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
          */
         Message message=new Message();
         
-        try {
-            outputStream=new FileOutputStream(file);
-          //  byte [] buffer=new byte[1024*4];
-            byte [] bytes = new byte[1024];
-            FileLength=connection.getContentLength();
-            message.what=0;
-            
-            handlersd.sendMessage(message);
-            int len = -1;
-            while (DownedFileLength<FileLength) {
-            //while((DownedFileLength=inputStream.read(bytes))!= -1){
-              //  outputStream.write(buffer);
-              //  DownedFileLength+=inputStream.read(buffer);
-               
-                outputStream.write(bytes, 0, len);
-                outputStream.flush();
-                DownedFileLength+=inputStream.read(bytes);
-                Log.i("-------->", DownedFileLength+"");
-                Message message1=new Message();
-                message1.what=1;
-                handlersd.sendMessage(message1);
-            }
-            inputStream.close();
-            outputStream.close();
-            Message message2=new Message();
-            message2.what=2;
+        try {  
+            outputStream=new FileOutputStream(file);  
+            byte [] buffer=new byte[1024];  
+            FileLength=connection.getContentLength();  
+            message.what=0;  
+            handlersd.sendMessage(message);  
+           
+            int len;  
+            /*
+             * inputStream.read(Buffer)！= -1 表示从InputStream中读取一个数组的数据，
+             * 如果返回-1 则表示数据读取完成了。
+             * */
+            while ((len = inputStream.read(buffer, 0, 1024)) != -1) {  
+            	 /*    raf.write(buffer);  
+                downloadLength += len;  
+            } 
+             * */
+          //  while (DownedFileLength<FileLength) {  
+                outputStream.write(buffer,0,len);  
+                DownedFileLength+=len;//inputStream.read(buffer);  
+                Log.i("-------->", DownedFileLength+"");  
+                Message message1=new Message();  
+                message1.what=1;  
+                handlersd.sendMessage(message1);  
+            }  
+            Message message2=new Message();  
+            message2.what=2;  
             handlersd.sendMessage(message2);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            if(path.endsWith(".jpg")||path.endsWith(".png")){
+            	try {
+    				mBitmap = BitmapFactory.decodeStream(getImageStream(path));
+    			} catch (Exception e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                mBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            }else if(path.endsWith(".apk")){
+            	File mFile = new File(savePathString);
+            	Intent install = new Intent();
+            	install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	install.setAction(android.content.Intent.ACTION_VIEW);
+            	install.setDataAndType(Uri.fromFile(mFile),
+            	"application/vnd.android.package-archive");
+            	startActivity(install);
+            }
+            
+        } catch (FileNotFoundException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }  
+		  
 	}
 	private Handler handlersd=new Handler()
     {
@@ -323,6 +639,12 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
                 Bitmap bmp=BitmapFactory.decodeByteArray(data, 0, data.length);
                 showImageV.setImageBitmap(bmp);
                 dialog.dismiss();
+                try {
+					saveFile(bmp, "abv.jpg");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         }
     };
@@ -446,7 +768,12 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 	}
 	private static final long VIBRATE_DURATION = 200L;
 	private void playBeepSoundAndVibrate() {
-        
+		AudioManager audioService = (AudioManager) getSystemService(AUDIO_SERVICE);
+        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            playBeep = false;
+        }else{
+        	playBeep = true;
+        }
 		if (playBeep && mediaPlayer != null) {
             mediaPlayer.start();
         }
@@ -457,6 +784,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
         }
     }
 	 private void initBeepSound() {
+			
 	        if (playBeep && mediaPlayer == null) {
 	            // The volume on STREAM_SYSTEM is not adjustable, and users found it
 	            // too loud,

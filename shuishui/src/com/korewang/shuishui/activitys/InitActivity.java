@@ -45,7 +45,7 @@ import android.widget.ListView;
 public class InitActivity extends Activity {
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet","a","v","dddd","ddaaa","dsssaa"};
 	public static final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 	private LocalBroadcastManager mLocalBroadcastManager;
 	@Override
@@ -162,7 +162,7 @@ public class InitActivity extends Activity {
 		View goback = findViewById(R.id.goback);
 		goback.setVisibility(View.GONE);
 		initValidate();
-		
+		mListView.setSelection(1);
 	}
 	public void initValidate(){
 		//mListView.setAdapter(new ArrayAdapter<String>(this,
