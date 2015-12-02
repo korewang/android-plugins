@@ -23,8 +23,10 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -43,11 +45,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class InitActivity extends Activity {
+	private static final String TAG = "InitActivity";
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet","a","v","dddd","ddaaa","dsssaa"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet"};
 	public static final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 	private LocalBroadcastManager mLocalBroadcastManager;
+	private ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
+	private SimpleAdapter myAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,19 +60,25 @@ public class InitActivity extends Activity {
 		mContext = this;
 		initView();
 		 
-         String name = "我的水水";
-       //  addShortcut();
-         Log.i("DateUtils", DateUtils.formatElapsedTime(0)+(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(new java.util.Date()));
-        
-         Long time = System.currentTimeMillis()/1000;
-         
-         Log.i("Timestamp", time.toString());
-         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
-         IntentFilter mintentfiler = new IntentFilter();
-         mintentfiler.addAction("add_action");
-         mintentfiler.addAction("add_action_name");
-         mLocalBroadcastManager.registerReceiver(mreceive, mintentfiler);
-          new Thread(new TestThread(mContext)).start();
+		String name = "我的水水";
+		   //  addShortcut();
+		Log.i("DateUtils", DateUtils.formatElapsedTime(0)+(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).format(new java.util.Date()));
+		
+		Long time = System.currentTimeMillis()/1000;
+		 
+		Log.i("Timestamp", time.toString());
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter mintentfiler = new IntentFilter();
+		mintentfiler.addAction("add_action");
+		mintentfiler.addAction("add_action_name");
+		mLocalBroadcastManager.registerReceiver(mreceive, mintentfiler);
+		new Thread(new TestThread(mContext)).start();
+          
+        editItem edit= new editItem();
+       
+      	edit.execute("0","Reset 第一项 GPS");//把listitem第一个子项内容改为"reset 第一项" 执行一个延时3s的操作
+      	Handler handler=new Handler();
+      	handler.postDelayed(addItem,9000);//延迟9s执行
 	}
 	
 	private BroadcastReceiver mreceive = new BroadcastReceiver(){
@@ -168,7 +179,7 @@ public class InitActivity extends Activity {
 		//mListView.setAdapter(new ArrayAdapter<String>(this,
           //      android.R.layout.simple_list_item_1, data));
 		
-		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
+		//ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
 		 
 		for(int i=0;i<data.length;i++)  
 		        {  
@@ -177,7 +188,7 @@ public class InitActivity extends Activity {
 		            map.put("ItemText", data[i]);  
 		            listItem.add(map);  
 		        } 
-		SimpleAdapter myAdapter = new SimpleAdapter(this,listItem,R.layout.init_listview,new String[] {"ItemImage","ItemText"},   
+		myAdapter = new SimpleAdapter(this,listItem,R.layout.init_listview,new String[] {"ItemImage","ItemText"},   
 				new int[] {R.id.ItemImage,R.id.ItemText} );
 		
 		mListView.setAdapter(myAdapter);
@@ -188,25 +199,32 @@ public class InitActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                     long arg3) {
                     //点击后在标题上显示点击了第几行                    setTitle("你点击了第"+arg2+"行");
-            	
-            	if(arg2==0 ){
-            		UIControl.startGPSActivity(mContext);            	
-            	}else if(arg2==1){
-            		UIControl.startListAppActivity(mContext);
-            	}
-            	else if(arg2==2){            		
-            		Toast.makeText(mContext, "你点击了第"+arg2+"行的"+data[arg2], Toast.LENGTH_LONG).show();
-            		UIControl.startBmapActivity(mContext);
-            	}else if(arg2==3){
-            		UIControl.startWebViewActivity(mContext);
-            	}else if(arg2==4){
-            		UIControl.startDownImageActivity(mContext);
-            	}else if(arg2==5){
-            		UIControl.startFragmentActivity(mContext);
-            	}else if(arg2==6){
-            		UIControl.startCameraSettingActivity(mContext);
-            		
-            	}
+            	switch (arg2) {
+					case 0:
+						UIControl.startGPSActivity(mContext); 
+						break;
+					case 1:
+						UIControl.startListAppActivity(mContext);
+						break;
+					case 2:
+	            		UIControl.startBmapActivity(mContext);
+						break;
+					case 3:
+						UIControl.startWebViewActivity(mContext);
+						break;
+					case 4:
+						UIControl.startDownImageActivity(mContext);
+						break;
+					case 5:
+						UIControl.startFragmentActivity(mContext);
+						break;
+					case 6:
+						UIControl.startCameraSettingActivity(mContext);
+						break;
+					default:
+						Toast.makeText(mContext, "listview"+arg2+"没有下级", Toast.LENGTH_LONG).show();
+						break;
+				}
             }
         });
 	}
@@ -261,4 +279,69 @@ public class InitActivity extends Activity {
 	    }
 	    return super.onKeyDown(keyCode, event);
 	  }
+	  Runnable addItem=new Runnable(){
+			 
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				HashMap<String, Object> addSingle = new HashMap<String, Object>();  
+				addSingle.put("ItemImage", R.drawable.ss_icon);  
+				addSingle.put("ItemText", "新增一项"); 
+				listItem.add(addSingle);
+				
+				myAdapter.notifyDataSetChanged();	
+				Toast.makeText(mContext, "Add new list item end!", Toast.LENGTH_SHORT).show();
+			}   	
+	    };
+	  public void netOperator(){  
+	        try {  
+	            //休眠1秒  
+	            Thread.sleep(5000);  
+	        } catch (InterruptedException e) {  
+	            // TODO Auto-generated catch block  
+	            e.printStackTrace();  
+	        }  
+	    }  
+	  /**
+	     * 定义一个类，让其继承AsyncTask这个类
+	     * Params: String类型，表示传递给异步任务的参数类型是String 或者是其他
+	     * Progress: Integer类型，进度条的单位通常都是Integer类型
+	     * Result：String类型，表示我们执行doin的string返回
+	     * 什么都没有的执行 void void void
+	     */
+	  class editItem extends AsyncTask<String,Integer,String>{
+		  	//onPreExecute方法用于在执行后台任务前做一些UI操作  
+	        @Override  
+	        protected void onPreExecute() {  
+	            Log.i(TAG, "onPreExecute() called");  
+	            Toast.makeText(mContext, "update list item...", Toast.LENGTH_SHORT).show();  
+	        }  
+			@Override
+			protected String doInBackground(String... params) {
+				netOperator();
+				HashMap<String, Object> updateItem = new HashMap<String, Object>();  
+		        updateItem.put("ItemImage", R.drawable.ss_icon);  
+		        updateItem.put("ItemText", params[1]); 
+				listItem.set(Integer.parseInt(params[0]), updateItem);
+				//params得到的是一个数组，params[0]在这里是"0",params[1]是"第1项"
+				//publishProgress(1); 可以更新进度条的
+				return "update completed！";	
+			}
+			@Override
+	        protected void onProgressUpdate(Integer... values) {
+				
+	            super.onProgressUpdate(values);
+	        }
+			@Override
+			protected void onPostExecute(String result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				myAdapter.notifyDataSetChanged();
+				//执行完毕，更新UI
+				Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+			}
+	  
+	    }
+	  
+	  /**/
 }

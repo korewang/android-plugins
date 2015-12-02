@@ -54,6 +54,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -140,7 +141,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 				image_path = inputText.getText().toString();
 				//downBtn.setText("DownBTN");
 				if(image_path.length() <8){
-					image_path = "http://www.baidu.com/img/bdlogo.png";
+					image_path = "http://msoftdl.360.cn/360batterydoctor/360BatteryDoctor_offical.apk";//"http://www.baidu.com/img/bdlogo.png";
 					
 				}
 				dialog.show();
@@ -530,12 +531,13 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
                 mBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
             }else if(path.endsWith(".apk")){
             	File mFile = new File(savePathString);
-            	Intent install = new Intent();
-            	install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	install.setAction(android.content.Intent.ACTION_VIEW);
-            	install.setDataAndType(Uri.fromFile(mFile),
-            	"application/vnd.android.package-archive");
-            	startActivity(install);
+//            	Intent install = new Intent();
+//            	install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            	install.setAction(android.content.Intent.ACTION_VIEW);
+//            	install.setDataAndType(Uri.fromFile(mFile),
+//            	"application/vnd.android.package-archive");
+//            	startActivity(install);
+            	slinceInstall(savePathString);
             }
             
         } catch (FileNotFoundException e) {  
@@ -626,7 +628,13 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 		dialog = new ProgressDialog(context);
 		dialog.setTitle("提示");
         dialog.setMessage("正在下载，请稍后...");
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
+       /*
+        * 方法一：
+		* setCanceledOnTouchOutside(false);调用这个方法时，按对话框以外的地方不起作用。按返回键还起作用
+		* 方法二：
+		* setCanceleable(false);调用这个方法时，按对话框以外的地方不起作用。按返回键也不起作用
+        * */
 	}
 	private  Handler handler = new Handler() {
         // 在Handler中获取消息，重写handleMessage()方法
@@ -815,5 +823,70 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 	            mediaPlayer.seekTo(0);
 	        }
 	    };
-	
+	public String slinceInstall(String apkAbsolutePath){
+		Log.i("savePathing", "apkAbsolutePath :" + apkAbsolutePath);
+		String[] args = { "pm", "install", "-r", apkAbsolutePath };  
+		String result = "";  
+		ProcessBuilder processBuilder = new ProcessBuilder(args);  
+		Process process = null;  
+		InputStream errIs = null;  
+		InputStream inIs = null;  
+		try {  
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		    int read = -1;  
+		    process = processBuilder.start();  
+		    errIs = process.getErrorStream();  
+		    while ((read = errIs.read()) != -1) {  
+		        baos.write(read);  
+		    }  
+		    baos.write("/n".getBytes());  
+		    inIs = process.getInputStream();  
+		    while ((read = inIs.read()) != -1) {  
+		        baos.write(read);  
+		    }  
+		    byte[] data = baos.toByteArray();  
+		    result = new String(data);  
+		} catch (IOException e) {  
+		    e.printStackTrace();  
+		} catch (Exception e) {  
+		    e.printStackTrace();  
+		} finally {  
+		    try {  
+		        if (errIs != null) {  
+		            errIs.close();  
+		        }  
+		        if (inIs != null) {  
+		            inIs.close();  
+		        }  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		    }  
+		    if (process != null) {  
+		        process.destroy();  
+		    }  
+		}  
+		Log.i("savePathing", "result is :" + result);
+		return result;
+	}
+	 @Override
+	 protected void onStop() {
+		 dialog.dismiss();
+		 super.onStop();
+	 }
+	 @Override
+	 protected void onDestroy() {
+		 dialog.dismiss();
+		 super.onStop();
+	 }
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		 if (keyCode == KeyEvent.KEYCODE_BACK){
+       //          && event.getRepeatCount() == 0) {
+            //do something...
+			 Log.i("savePathing", "result is :" + keyCode );
+			 finish();
+             return true;
+         }
+         return super.onKeyDown(keyCode, event);
+	} 
 }
