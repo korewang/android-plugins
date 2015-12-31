@@ -23,7 +23,7 @@
             android:background="@drawable/gray"
             wxy:borderRadius="10dp"
             wxy:type="round"
-             />
+            wxy:duration="4000" />
 		<LinearLayout
 		        android:layout_width="0dp"
 		        android:layout_height="fill_parent"

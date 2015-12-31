@@ -7,12 +7,13 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-	<!-- key com.korewang.shuishui -->
+    <!-- key com.korewang.shuishui -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 在sd卡创建  删除文件 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
     <!-- 访问网络状态的权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,24 +22,30 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
- 	<!-- read sim card test -->
+    <!-- read sim card test -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-	
+
     <uses-feature android:name="android.hardware.wifi" />
-	<!--  camera open-->
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-feature android:name="android.hardware.camera" />
-	<!-- 添加快捷方式 -->
+    <!-- camera open -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <!-- 添加快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <!-- 移除快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <!-- 查询快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 重力感应 -->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!-- 读联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".application.Applications"
         android:allowBackup="true"
@@ -90,12 +97,45 @@
             android:label="@string/title_activity_fragment_demo" >
         </activity>
         <activity
-            android:name=".FragmentMainActivity"
+            android:name=".activitys.FragmentMainActivity"
             android:label="@string/title_activity_fragment_main" >
         </activity>
         <activity
-            android:name="com.korewang.shuishui.activitys.CameraSettingActivity"
+            android:name=".activitys.CameraSettingActivity"
             android:label="@string/title_activity_camera_setting" >
+        </activity>
+        <activity
+            android:name=".activitys.MultipleThreadDownLoaderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_multiple_thread_down_loader"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MyExpandableListActivity"
+            android:label="@string/title_activity_my_expandable_list"
+            android:parentActivityName="android.app.ExpandableListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.app.ExpandableListActivity" />
+        </activity>
+        <activity
+            android:name=".MyPreferenceActivity"
+            android:label="@string/title_activity_my_preference" >
+            <intent-filter>
+                <action android:name="android.intent.action.PREFERENCE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.PREFERENCE" />
+                <!-- 自定义action  和category搭配使用  否则action不起作用 程序报错 -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AnimationFrameActivity"
+            android:label="@string/title_activity_animation_frame" >
+        </activity>
+        <activity
+            android:name=".WrapActivity"
+            android:label="@string/title_activity_wrap" >
         </activity>
     </application>
 

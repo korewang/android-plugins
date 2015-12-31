@@ -1,5 +1,8 @@
 package com.korewang.shuishui.plugins;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.korewang.shuishui.R;
 
 import android.content.Context;
@@ -14,20 +17,14 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
 
-
-
-/**
- * http://blog.csdn.net/lmj623565791/article/details/41967509
- * 
- * @author zhy
- * 
- */
 public class RoundImageView extends ImageView
 {
 	/**
@@ -40,6 +37,11 @@ public class RoundImageView extends ImageView
 	 * 圆角大小的默认值
 	 */
 	private static final int BODER_RADIUS_DEFAULT = 10;
+	
+	/**
+	 * 设置自定义的一个duration
+	 */
+	private int  mDuration =6000;
 	/**
 	 * 圆角的大小
 	 */
@@ -67,6 +69,27 @@ public class RoundImageView extends ImageView
 	private int mWidth;
 	private RectF mRoundRect;
 
+	//图像透明度每次改变的大小
+	private int alphaDelta = 0;
+	//记录图片当前的透明度
+	private int curAlpha =0;
+	private  final int SPEED = 300;
+	//开一个handler
+	Handler mhandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg){
+			if(msg.what == 0x123){
+				curAlpha += alphaDelta;
+				if(curAlpha >255){
+					System.out.println("curAlpha"+curAlpha);
+					curAlpha =255;
+					RoundImageView.this.setAlpha(curAlpha);
+				}
+			}
+		}
+	};
+	
+			
 	public RoundImageView(Context context, AttributeSet attrs)
 	{
 
@@ -75,6 +98,8 @@ public class RoundImageView extends ImageView
 		mBitmapPaint = new Paint();
 		mBitmapPaint.setAntiAlias(true);
 
+		
+		
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.RoundImageView);
 
@@ -85,7 +110,11 @@ public class RoundImageView extends ImageView
 										.getDisplayMetrics()));// 默认为10dp
 		type = a.getInt(R.styleable.RoundImageView_type, TYPE_CIRCLE);// 默认为Circle
 
+		mDuration = a.getInt(R.styleable.RoundImageView_duration, mDuration);
+		System.out.println("mDuration:"+mDuration);
+		alphaDelta = 255*SPEED / mDuration;
 		a.recycle();
+		
 	}
 
 	public RoundImageView(Context context)
@@ -171,6 +200,20 @@ public class RoundImageView extends ImageView
 			canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);
 			// drawSomeThing(canvas);
 		}
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				Message msg = new Message();
+				msg.what = 0x123;
+				if(curAlpha >=255){
+					timer.cancel();
+				}else{
+					mhandler.sendMessage(msg);
+				}
+			}
+		}, 0,SPEED);
 	}
 
 	@Override

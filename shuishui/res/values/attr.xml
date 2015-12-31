@@ -6,11 +6,13 @@
         <enum name="circle" value="0" />  
         <enum name="round" value="1" />  
     </attr>  
-    
+    <attr name="duration" />
   
     <declare-styleable name="RoundImageView">  
         <attr name="borderRadius" />  
         <attr name="type" />  
+        <attr name="duration" />
     </declare-styleable>  
+    
   
 </resources>  

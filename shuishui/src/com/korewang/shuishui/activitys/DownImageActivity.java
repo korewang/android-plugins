@@ -1,5 +1,6 @@
 package com.korewang.shuishui.activitys;
 
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -29,6 +31,7 @@ import com.korewang.shuishui.R;
 import com.korewang.shuishui.R.id;
 import com.korewang.shuishui.R.layout;
 import com.korewang.shuishui.R.menu;
+import com.korewang.shuishui.service.DoHttpGet;
 import com.korewang.shuishui.widget.HeaderView;
 import com.korwang.shuishui.utils.FileDownloadThread;
 
@@ -149,6 +152,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 					public void run(){
 						try{
 							DownSDFile(image_path);
+							
 						}catch(Exception e){
 							 e.printStackTrace();
 						}
@@ -194,6 +198,9 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
             dialog.setMessage("下载进度:" + progress + " %");
         }  
     }; 
+   
+    
+    
 	 /** 
      * 下载准备工作，获取SD卡路径、开启线程 
      */  
@@ -443,6 +450,21 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
 	/*
 	 * add end 
 	 * */
+    
+    
+    public void getS(String path){
+    	try{
+	    	URL url=new URL(path);
+	    	HttpURLConnection conn  =(HttpURLConnection)url.openConnection();
+	    	conn.setReadTimeout(6000);
+	    	conn.setRequestMethod("GET");
+	    	if(conn.getResponseCode()==200){
+	    		Log.i("ddddddddddddddddddddd", "200");
+	    	}
+    	}catch(Exception e){
+    		Log.i("ddddddddddddddddddddd", "eeeeeeeeeeeeeeeeeeeeeee");
+    	}
+    }
 	public void DownSDFile(String path){
 		/*
          * 连接到服务器
@@ -656,6 +678,18 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
             }
         }
     };
+    
+    
+    /// runnable   可以达到资源共享
+    
+    /**
+     * Thread  mt = new Thread();
+     * 
+     *    new Thread(mt).start();;;;  启动方法
+     * 
+     */
+    
+    
 	public class MyThread implements Runnable{
 
         @Override

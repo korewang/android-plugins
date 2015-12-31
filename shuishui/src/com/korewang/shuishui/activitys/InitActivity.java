@@ -35,6 +35,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -48,7 +50,7 @@ public class InitActivity extends Activity {
 	private static final String TAG = "InitActivity";
 	private Context mContext;
 	private ListView mListView;
-	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSet"};
+	private String[] data = new String[]{"获取GPS","获取手机app信息","百度定位","sqlite","下载一个图片显示在imageview里","Fragment learning","CameraSurfaceView","MultipleThreadAndDrawCircle","MyExpandableList","MyPreferenceScreen"};
 	public static final String ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT";
 	private LocalBroadcastManager mLocalBroadcastManager;
 	private ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
@@ -181,13 +183,12 @@ public class InitActivity extends Activity {
 		
 		//ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
 		 
-		for(int i=0;i<data.length;i++)  
-		        {  
-		            HashMap<String, Object> map = new HashMap<String, Object>();  
-		            map.put("ItemImage", R.drawable.ss_icon);//加入图片            map.put("ItemTitle", "第"+i+"行");  
-		            map.put("ItemText", data[i]);  
-		            listItem.add(map);  
-		        } 
+		for(int i=0;i<data.length;i++) {  
+            HashMap<String, Object> map = new HashMap<String, Object>();  
+            map.put("ItemImage", R.drawable.ss_icon);//加入图片            map.put("ItemTitle", "第"+i+"行");  
+            map.put("ItemText", data[i]);  
+            listItem.add(map);  
+        } 
 		myAdapter = new SimpleAdapter(this,listItem,R.layout.init_listview,new String[] {"ItemImage","ItemText"},   
 				new int[] {R.id.ItemImage,R.id.ItemText} );
 		
@@ -221,14 +222,70 @@ public class InitActivity extends Activity {
 					case 6:
 						UIControl.startCameraSettingActivity(mContext);
 						break;
+					case 7:
+						UIControl.startMultipleActivity(mContext);
+						break;
+					case 8:
+						UIControl.startExpandableListActivity(mContext);
+						break;
+					case 9:
+						String ac = getIntent().getAction();
+						Log.i(TAG, ac);
+						UIControl.startPreferenceSActivity(mContext);
+						break;
 					default:
 						Toast.makeText(mContext, "listview"+arg2+"没有下级", Toast.LENGTH_LONG).show();
 						break;
 				}
             }
         });
+		mListView.setOnScrollListener(new OnScrollListener() {
+			//AbsListView  is mListview
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {  
+                    if (view.getLastVisiblePosition() == view.getCount() - 1) {  
+                    	loadData();  
+                    		
+                    }  
+                }  
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				int lastItem = firstVisibleItem + visibleItemCount - 1 ;
+			}
+		});
 	}
+	/*
+	 * 
 	
+	 * */
+	protected void loadData(){
+		Handler loadingHanlders = new Handler();
+		loadingHanlders.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				SimpleDateFormat formatter    =   new    SimpleDateFormat    ("yyyy年MM月dd日    HH:mm:ss     ");       
+				Date    curDate  =   new    Date(System.currentTimeMillis());//获取当前时间       
+				String    str    =    formatter.format(curDate);
+				for(int i =0;i<5;i++){
+					HashMap<String, Object> addSingle = new HashMap<String, Object>();  
+	 				addSingle.put("ItemImage", R.drawable.ss_icon);  
+	 				addSingle.put("ItemText", "新加载一笔数据"+str); 
+	 				listItem.add(addSingle);
+				}
+				 
+ 				
+ 				myAdapter.notifyDataSetChanged();
+			}
+		}, 3000);
+	}
 	@Override
 	protected void onDestroy(){
 		super.onDestroy();

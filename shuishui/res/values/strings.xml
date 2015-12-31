@@ -3,7 +3,6 @@
 
     <string name="app_name">水水</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="title_activity_list_app">ListAppActivity</string>
     <string name="title_activity_get_gps">GetGPSActivity</string>
     <string name="title_activity_bmap">BmapActivity</string>
@@ -13,15 +12,28 @@
     <string name="title_activity_fragment_main">FragmentMainActivity</string>
     <string name="fragment_title">DemoFragmentDemoFragmentDemoFragmentDemoFragment</string>
     <string name="title_activity_camera_setting">CameraSettingActivity</string>
-	<string name="no_camera">没有相机</string>
-	<string name="capture">拍照</string>
-	<string name="changeshine">切换平衡光</string>
-	<!-- 选项菜单 -->
-	<string name="on_item0">Onitem-0</string>
-	<string name="on_item1">Onitem-1</string>
-	<string name="on_item2">Onitem-2</string>
-	<string name="on_item3">Onitem-3</string>
-	<string name="on_item4">Onitem-4</string>
-	<string name="on_item5">Onitem-5</string>
+    <string name="no_camera">没有相机</string>
+    <string name="capture">拍照</string>
+    <string name="changeshine">切换平衡光</string>
+    <!-- 选项菜单 -->
+    <string name="on_item0">Onitem-0</string>
+    <string name="on_item1">Onitem-1</string>
+    <string name="on_item2">Onitem-2</string>
+    <string name="on_item3">Onitem-3</string>
+    <string name="on_item4">Onitem-4</string>
+    <string name="on_item5">Onitem-5</string>
     <string name="action_settings">SETTING</string>
+    <string name="title_activity_multiple_thread_down_loader">MultipleThreadDownLoaderActivity</string>
+    <string name="path">MultipleThreadDownLoaderActivity-URL</string>
+    <string name="downbutton">Start Downloading</string>
+    <string name="stopbutton">Pause Download</string>
+    <string name="sdcarderror">There is no SDCard or it is not allowed to write</string>
+    <string name="downsuccess">download is completed successfully!</string>
+    <string name="downerror">download error!</string>
+    <string name="title_activity_my_expandable_list">MyExpandableListActivity</string>
+    <string name="title_activity_my_preference">MyPreferenceActivity</string>
+    <string name="title_activity_animation_frame">AnimationFrameActivity</string>
+    <string name="start">开始</string>
+    <string name="title_activity_wrap">WrapActivity</string>
+
 </resources>
