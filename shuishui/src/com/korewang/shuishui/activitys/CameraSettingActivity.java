@@ -128,6 +128,8 @@ public class CameraSettingActivity extends Activity {
     protected void onDestroy(){
         Log.d(LOG_TAG, "onDestroy");
         super.onDestroy();
+        mCamera.stopPreview();
+        mCamera.release();
     }
 
     /**

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ok">确定1</string>
-    <string name="cancel">停止</string>
+    <string name="app_name">Nicole</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="startService">startService</string>
+    <string name="stopService">stopService</string>
+    <string name="alarmButton">alarmButton</string>
+    <string name="shortCutButton">AddShortCutButton</string>
+    <string name="shortCutTitle">Nicole Title</string>
 </resources>

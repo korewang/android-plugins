@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:attr="http://schemas.android.com/apk/res/com.korewang.shuishui"
+    style="@style/theme"
+    tools:context="com.korewang.shuishui.animation.activitys.GestrueZoomActivity" >
+
+	<com.korewang.shuishui.widget.HeaderView
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:id="@+id/headerViewGestrueZoom" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" 
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_line"/>
+
+    <ImageView
+        android:id="@+id/imag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+	<LinearLayout 
+	    android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	    <Button
+	        android:id="@+id/startService"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/startService" />
+	
+	    <Button
+	        android:id="@+id/stopService"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/stopService" />
+	    <Button
+	        android:id="@+id/alarmButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/alarmButton" />
+	    <Button
+	        android:id="@+id/addShortCutButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+	        
+	        android:text="@string/shortCutButton" />
+	</LinearLayout>
+	  <!--
+	<com.korewang.shuishui.plugins.MyGifView 
+			   android:id="@+id/gif"
+		       android:layout_height="wrap_content"
+		       android:layout_width="wrap_content"
+		       android:src="@drawable/smxx" 
+		       />
+	 -->
+		
+	<com.korewang.shuishui.plugins.GifMovieView
+        android:id="@+id/gif_movie_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+   	<com.korewang.shuishui.plugins.GifMovieView
+        android:id="@+id/gif_movie_girl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
+
+	
+</LinearLayout>

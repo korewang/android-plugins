@@ -58,8 +58,8 @@ public class FragmentMainActivity extends FragmentActivity {
 		initView();
 	}
 	/**
-	   * 初始化组件
-	   */
+	 * 初始化组件
+    */
 	  private void initView() {
 	    mLayoutInflater = LayoutInflater.from(this);
 

@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/theme"
+    tools:context="com.korewang.shuishui.animation.activitys.MySharedPreferenceActivity" >
+
+    
+    <com.korewang.shuishui.widget.HeaderView 
+       	android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sharedHeaderView"  />
+    <TextView
+        android:id="@+id/msharedtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    
+
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:text="保存"/>
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check"
+            android:text="查看次数"/>
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/write"
+            android:text="写文件"/>
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/read"
+            android:text="读文件"/>
+        
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+	        android:id="@+id/edt"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+    </LinearLayout>
+
+</LinearLayout>

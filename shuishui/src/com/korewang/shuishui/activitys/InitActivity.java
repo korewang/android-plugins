@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import com.baidu.navisdk.util.common.DateTimeUtils;
+import com.korewang.shuishui.MyExpandableListActivity;
 import com.korewang.shuishui.R;
+import com.korewang.shuishui.animation.activitys.GestrueZoomActivity;
 import com.korewang.shuishui.widget.HeaderView;
 import com.korwang.shuishui.utils.BadgeUtil;
 import com.korwang.shuishui.utils.TestBroadcast;
@@ -15,6 +17,7 @@ import com.korwang.shuishui.utils.UIControl;
 
 import android.app.Activity;
 import android.app.LocalActivityManager;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -81,6 +84,9 @@ public class InitActivity extends Activity {
       	edit.execute("0","Reset 第一项 GPS");//把listitem第一个子项内容改为"reset 第一项" 执行一个延时3s的操作
       	Handler handler=new Handler();
       	handler.postDelayed(addItem,9000);//延迟9s执行
+      	//cancel not
+      	NotificationManager nManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+      	nManager.cancel(1);
 	}
 	
 	private BroadcastReceiver mreceive = new BroadcastReceiver(){
@@ -200,15 +206,17 @@ public class InitActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                     long arg3) {
                     //点击后在标题上显示点击了第几行                    setTitle("你点击了第"+arg2+"行");
+            	
             	switch (arg2) {
 					case 0:
-						UIControl.startGPSActivity(mContext); 
+						UIControl.startGPSActivity(mContext);
 						break;
 					case 1:
 						UIControl.startListAppActivity(mContext);
 						break;
 					case 2:
 	            		UIControl.startBmapActivity(mContext);
+						
 						break;
 					case 3:
 						UIControl.startWebViewActivity(mContext);
@@ -286,6 +294,7 @@ public class InitActivity extends Activity {
 			}
 		}, 3000);
 	}
+	
 	@Override
 	protected void onDestroy(){
 		super.onDestroy();
@@ -396,9 +405,9 @@ public class InitActivity extends Activity {
 				myAdapter.notifyDataSetChanged();
 				//执行完毕，更新UI
 				Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+				
 			}
 	  
 	    }
 	  
-	  /**/
 }

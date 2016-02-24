@@ -1,12 +1,19 @@
 package com.korewang.shuishui;
 
+import com.korewang.shuishui.activitys.BmapActivity;
+import com.korewang.shuishui.activitys.InitActivity;
+import com.korewang.shuishui.animation.activitys.GestrueZoomActivity;
 import com.korwang.shuishui.utils.UIControl;
 
 import android.app.Activity;
 import android.app.ExpandableListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +30,7 @@ import android.widget.TextView;
 
 public class MyExpandableListActivity extends ExpandableListActivity {
 	private Context mcontext;
+	private static final String TAG = "MyExpandableListActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +51,7 @@ public class MyExpandableListActivity extends ExpandableListActivity {
 					{"中国","美国","德国"},
 					{"北京","迈阿密","柏林汉堡市"},
 					{"汉语","美式英语","德语"},
-					{"Frame(逐帧)动画","shader动画"}
+					{"Frame(逐帧)动画","shader动画","sharedPreference","GestrueZoom","Matrix缩放"}
 					
 			};
 			@Override
@@ -181,9 +189,11 @@ public class MyExpandableListActivity extends ExpandableListActivity {
 		};
 		//ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
         //expandableListView.setAdapter(adapter);
-	        setListAdapter(adapter);
+	       setListAdapter(adapter);
 	      this.getExpandableListView().setOnChildClickListener(new OnChildClickListener() {
 			
+			
+
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
@@ -194,12 +204,52 @@ public class MyExpandableListActivity extends ExpandableListActivity {
 					UIControl.startAnimationFrameActivity(mcontext);
 				}else if(st.equals("31")){
 					UIControl.startWrapActivity(mcontext);
+				}else if(st.equals("32")){
+					UIControl.startSharedActivity(mcontext);
+				}else if(st.equals("33")){
+					UIControl.startGestrueZoomActivity(mcontext);
+					new Thread(new myVideo()).start();
+					
+//					Handler mg = new Handler();
+//					mg.postDelayed(myVideo, 12000);
+					/*
+					----------------------
+					中国建设银行
+					----------------------
+					中国邮政储蓄
+					   银行
+					-----------------------
+					*/
+				}else if(st.equals("34")){
+					UIControl.startMatrixActivity(mcontext);
 				}
 				
-				return false;
+				return true;
 			}
 		});
 	}
-
 	
+	 class myVideo implements Runnable{
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+			Message m = Message.obtain();
+			m.what=1;
+			//mH.postDelayed(myVideo, 8000); 每8秒发一次
+			//mH.sendMessage(m);
+			mH.sendMessageDelayed(m, 8000);
+			Log.i("test","name is :" + Thread.currentThread().getName());
+		}
+	};
+	private static Handler mH = new Handler(){
+		public void handleMessage(Message msg){
+			if(msg.what==1){
+				Log.i("test", "mesg1");
+			}
+		}
+	};
+
+
 }

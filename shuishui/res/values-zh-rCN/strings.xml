@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">水水</string>
     <string name="ok">确定</string>
+    <string name="startService">开始服务</string>
+    <string name="stopService">暂停服务1</string>
+    <string name="alarmButton">闹铃设置</string>
+    <string name="shortCutButton">添加桌面快捷方式</string>
+    <string name="shortCutTitle">水水快捷桌面</string>
 </resources>

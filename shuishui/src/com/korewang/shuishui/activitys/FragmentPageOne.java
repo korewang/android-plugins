@@ -19,6 +19,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,6 +47,9 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 	private ImageView mImage;
 	private static final int RESULT = 1;
 	private final String IMAGE_TYPE = "image/*";
+	private  FragmentManager fm,fmt;
+	private  FragmentTransaction ft,ftt;
+	
 	Target target;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +66,13 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
 		return rootView;
 	}
 	public void initView(){
+		fm = getFragmentManager(); 
+		fmt = getFragmentManager(); 
+		ft = fm.beginTransaction();//注意。一个transaction 只能commit一次，所以不要定义成全局变量
+		ftt = fm.beginTransaction();//注意。一个transaction 只能commit一次，所以不要定义成全局变量
+		
+		
+		
 		mSelectImg = (Button)rootView.findViewById(R.id.selectpic);
 		mImage = (ImageView)rootView.findViewById(R.id.resultimg);
 		mSelectImg.setOnClickListener(this);
@@ -96,9 +108,20 @@ public class FragmentPageOne extends Fragment implements View.OnClickListener,Vi
         				isFirstIn = false;
         			}else{
     				Toast.makeText(getActivity(),"选择的色彩： " +   
-                        						parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();   
-                        			}
-                    }   
+                        						parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+    				
+	    				/*FragmentPageTwo df = new FragmentPageTwo();  
+	    				Bundle bundle = new Bundle();  
+	    				bundle.putLong("id", id);  
+	    				bundle.putString("name", "选择的色彩：");  
+	    				df.setArguments(bundle);  
+	    				ft.replace(R.id.main_fragment, df);  
+	    				ft.addToBackStack(null);  
+	    				ft.commit();
+	    				*/
+	    				
+        			}
+            }   
   
             @Override  
             public void onNothingSelected(AdapterView<?> parent) {

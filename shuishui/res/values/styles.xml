@@ -30,4 +30,5 @@
 	    <item name="android:orientation">vertical</item>
 	    <item name="android:background">@color/white</item>
 	</style>
+	<style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
 </resources>

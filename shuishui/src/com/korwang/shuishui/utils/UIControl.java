@@ -1,9 +1,8 @@
 package com.korwang.shuishui.utils;
 
-import com.korewang.shuishui.AnimationFrameActivity;
+import com.korewang.shuishui.MatrixActivity;
 import com.korewang.shuishui.MyExpandableListActivity;
 import com.korewang.shuishui.MyPreferenceActivity;
-import com.korewang.shuishui.WrapActivity;
 import com.korewang.shuishui.activitys.BmapActivity;
 import com.korewang.shuishui.activitys.CameraSettingActivity;
 import com.korewang.shuishui.activitys.DownImageActivity;
@@ -12,6 +11,10 @@ import com.korewang.shuishui.activitys.GetGPSActivity;
 import com.korewang.shuishui.activitys.ListAppActivity;
 import com.korewang.shuishui.activitys.MultipleThreadDownLoaderActivity;
 import com.korewang.shuishui.activitys.WebChromeActivity;
+import com.korewang.shuishui.animation.activitys.AnimationFrameActivity;
+import com.korewang.shuishui.animation.activitys.GestrueZoomActivity;
+import com.korewang.shuishui.animation.activitys.MySharedPreferenceActivity;
+import com.korewang.shuishui.animation.activitys.WrapActivity;
 
 import android.app.Activity;
 import android.app.Notification.Action;
@@ -65,7 +68,7 @@ public class UIControl {
     	context.startActivity(intent);
     }
     public static void startPreferenceSActivity(Context context){
-//    	
+//    	  隐式 意图 传递打开 
 //    	Intent intent = new Intent(context,MyPreferenceActivity.class);
 //    	context.startActivity(intent);
     	Intent intent = new Intent();
@@ -85,4 +88,20 @@ public class UIControl {
     	context.startActivity(intent);
     }
     
+    public static void startSharedActivity(Context context){
+    	Intent intent = new Intent(context,MySharedPreferenceActivity.class);
+    	context.startActivity(intent);
+    }
+    
+    public static void startGestrueZoomActivity(Context context){
+    	Intent intent = new Intent(context,GestrueZoomActivity.class);
+    	context.startActivity(intent);
+    	
+    }
+    
+    public static void startMatrixActivity(Context context){
+    	Intent intent = new Intent(context,MatrixActivity.class);
+    	context.startActivity(intent);
+    	
+    }
 }

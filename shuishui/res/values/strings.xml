@@ -35,5 +35,11 @@
     <string name="title_activity_animation_frame">AnimationFrameActivity</string>
     <string name="start">开始</string>
     <string name="title_activity_wrap">WrapActivity</string>
+    <string name="title_activity_my_shared_preference">MySharedPreferenceActivity</string>
+    <string name="title_activity_gestrue_zoom">GestrueZoomActivity</string>
+    <string name="startService">startService</string>
+    <string name="stopService">stopService</string>
+    <string name="alarmButton">alarmButton</string>
+    <string name="title_activity_matrix">MatrixActivity</string>
 
 </resources>

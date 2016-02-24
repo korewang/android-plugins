@@ -35,7 +35,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <!-- 添加快捷方式 -->
+    <!-- 添加桌面快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <!-- 移除快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
@@ -45,13 +45,22 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <!-- 读联系人权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- xie 联系人权限 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
+    <!-- 禁用硬件加速  android:hardwareAccelerated="false" -->
     <application
         android:name=".application.Applications"
         android:allowBackup="true"
         android:icon="@drawable/ss_icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
+        <service android:name=".service.TestService" >
+            <intent-filter>
+                <action android:name="com.shuishui.FIRST_SERVICE" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activitys.InitActivity"
             android:label="@string/app_name" >
@@ -102,7 +111,12 @@
         </activity>
         <activity
             android:name=".activitys.CameraSettingActivity"
-            android:label="@string/title_activity_camera_setting" >
+            android:label="@string/title_activity_camera_setting"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activitys.InitActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activitys.InitActivity" />
         </activity>
         <activity
             android:name=".activitys.MultipleThreadDownLoaderActivity"
@@ -113,10 +127,10 @@
         <activity
             android:name=".MyExpandableListActivity"
             android:label="@string/title_activity_my_expandable_list"
-            android:parentActivityName="android.app.ExpandableListActivity" >
+            android:parentActivityName=".activitys.InitActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.ExpandableListActivity" />
+                android:value=".activitys.InitActivity" />
         </activity>
         <activity
             android:name=".MyPreferenceActivity"
@@ -130,12 +144,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AnimationFrameActivity"
+            android:name=".animation.activitys.AnimationFrameActivity"
             android:label="@string/title_activity_animation_frame" >
         </activity>
         <activity
-            android:name=".WrapActivity"
+            android:name=".animation.activitys.WrapActivity"
             android:label="@string/title_activity_wrap" >
+        </activity>
+        <activity
+            android:name=".animation.activitys.MySharedPreferenceActivity"
+            android:label="@string/title_activity_my_shared_preference" >
+        </activity>
+        <activity
+            android:name=".animation.activitys.GestrueZoomActivity"
+            android:label="@string/title_activity_gestrue_zoom"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MyExpandableListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MyExpandableListActivity" />
+        </activity>
+        <activity
+            android:name=".animation.activitys.AlarmActivity"
+            android:label="@string/title_activity_gestrue_zoom" >
+        </activity>
+        <activity
+            android:name=".MatrixActivity"
+            android:label="@string/title_activity_matrix" >
         </activity>
     </application>
 

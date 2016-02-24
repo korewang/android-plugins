@@ -34,6 +34,7 @@ import com.korewang.shuishui.R.menu;
 import com.korewang.shuishui.service.DoHttpGet;
 import com.korewang.shuishui.widget.HeaderView;
 import com.korwang.shuishui.utils.FileDownloadThread;
+import com.sinovoice.ejttsplayer.Synthesize;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -287,8 +288,12 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
                             isfinished = false;  
                         }  
                     }  
-                    // 通知handler去更新视图组件  
-                    Message msg = new Message();  
+                    /*通知handler去更新视图组件
+                     *   此处使用的是obtain 避免重新new message 
+                     *  源码是使用了Synthesize
+                     * */
+                    
+                    Message msg = Message.obtain();  
                     msg.getData().putInt("size", downloadedAllSize);  
                     msg.getData().putString("uri", filePath);
                     mHandler.sendMessage(msg);  
@@ -512,7 +517,7 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
         /*
          * 向SD卡中写入文件,用Handle传递线程
          */
-        Message message=new Message();
+        Message message=Message.obtain();
         
         try {  
             outputStream=new FileOutputStream(file);  
@@ -535,11 +540,11 @@ public class DownImageActivity extends Activity implements View.OnClickListener{
                 outputStream.write(buffer,0,len);  
                 DownedFileLength+=len;//inputStream.read(buffer);  
                 Log.i("-------->", DownedFileLength+"");  
-                Message message1=new Message();  
+                Message message1= Message.obtain();  
                 message1.what=1;  
                 handlersd.sendMessage(message1);  
             }  
-            Message message2=new Message();  
+            Message message2=Message.obtain();  
             message2.what=2;  
             handlersd.sendMessage(message2);
             if(path.endsWith(".jpg")||path.endsWith(".png")){

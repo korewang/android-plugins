@@ -21,6 +21,14 @@ public final class R {
         public static final int province=0x7f070002;
     }
     public static final class attr {
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int auto_play=0x7f010003;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -47,6 +55,22 @@ The % suffix always means a percentage of the base size; the optional %p suffix 
 some parent container.
          */
         public static final int duration=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int gif=0x7f010004;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int gifMoviewViewStyle=0x7f010006;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int paused=0x7f010005;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -536,134 +560,161 @@ some parent container.
         public static final int ovalanimation=0x7f02000d;
         public static final int red_cicrle=0x7f02000e;
         public static final int river=0x7f02000f;
-        public static final int sock=0x7f020010;
-        public static final int ss_icon=0x7f020011;
-        public static final int t_check=0x7f020012;
-        public static final int t_claim=0x7f020013;
-        public static final int t_index_seriesreport=0x7f020014;
-        public static final int t_linkstagekey=0x7f020015;
-        public static final int text_transparent=0x7f020016;
-        public static final int textdrwable=0x7f020017;
-        public static final int wats=0x7f020018;
-        public static final int white_cicrle=0x7f020019;
+        public static final int shape_line=0x7f020010;
+        public static final int smxx=0x7f020011;
+        public static final int sock=0x7f020012;
+        public static final int ss_icon=0x7f020013;
+        public static final int start_play=0x7f020014;
+        public static final int t_check=0x7f020015;
+        public static final int t_claim=0x7f020016;
+        public static final int t_index_seriesreport=0x7f020017;
+        public static final int t_linkstagekey=0x7f020018;
+        public static final int text_transparent=0x7f020019;
+        public static final int textdrwable=0x7f02001a;
+        public static final int wats=0x7f02001b;
+        public static final int white_cicrle=0x7f02001c;
+        public static final int wwwes=0x7f02001d;
     }
     public static final class id {
-        public static final int DownBtn=0x7f0d0027;
-        public static final int DownSD=0x7f0d0028;
-        public static final int EditTextwifi=0x7f0d003f;
-        public static final int GetBatteryMSG=0x7f0d0029;
-        public static final int ItemImage=0x7f0d004a;
-        public static final int ItemText=0x7f0d004b;
-        public static final int ScanWifi=0x7f0d002a;
-        public static final int action_settings=0x7f0d0058;
-        public static final int add=0x7f0d0005;
-        public static final int app_listView=0x7f0d004c;
-        public static final int bmapView=0x7f0d0021;
-        public static final int bn1=0x7f0d0011;
-        public static final int bn2=0x7f0d0012;
-        public static final int bn3=0x7f0d0013;
-        public static final int bn4=0x7f0d0014;
-        public static final int bn5=0x7f0d0015;
-        public static final int button8=0x7f0d0019;
-        public static final int button_=0x7f0d0025;
-        public static final int button_capture=0x7f0d0024;
-        public static final int camera_preview=0x7f0d0023;
-        public static final int canPaste=0x7f0d000b;
+        public static final int DownBtn=0x7f0d002c;
+        public static final int DownSD=0x7f0d002d;
+        public static final int EditTextwifi=0x7f0d0044;
+        public static final int GetBatteryMSG=0x7f0d002e;
+        public static final int ItemImage=0x7f0d0057;
+        public static final int ItemText=0x7f0d0058;
+        public static final int ScanWifi=0x7f0d002f;
+        public static final int action_settings=0x7f0d006c;
+        public static final int add=0x7f0d000a;
+        public static final int addShortCutButton=0x7f0d004d;
+        public static final int alarmButton=0x7f0d004c;
+        public static final int app_listView=0x7f0d0059;
+        public static final int bmapView=0x7f0d0026;
+        public static final int bn1=0x7f0d0016;
+        public static final int bn2=0x7f0d0017;
+        public static final int bn3=0x7f0d0018;
+        public static final int bn4=0x7f0d0019;
+        public static final int bn5=0x7f0d001a;
+        public static final int button8=0x7f0d001e;
+        public static final int button_=0x7f0d002a;
+        public static final int button_capture=0x7f0d0029;
+        public static final int camera_preview=0x7f0d0028;
+        public static final int canPaste=0x7f0d0010;
+        public static final int check=0x7f0d0067;
         public static final int circle=0x7f0d0000;
-        public static final int co=0x7f0d0003;
-        public static final int comemsm=0x7f0d0009;
-        public static final int content=0x7f0d0046;
-        public static final int dealimg=0x7f0d002f;
-        public static final int downloadbutton=0x7f0d004f;
-        public static final int fragment_two=0x7f0d0041;
-        public static final int frameImage=0x7f0d0010;
-        public static final int getGps=0x7f0d0044;
-        public static final int getcontact=0x7f0d0056;
-        public static final int goback=0x7f0d0047;
-        public static final int gps_btn=0x7f0d0043;
-        public static final int headerDownView=0x7f0d0022;
-        public static final int headerView=0x7f0d001f;
-        public static final int headerViewAnimation=0x7f0d000d;
-        public static final int headerViewweb=0x7f0d0002;
-        public static final int header_tips=0x7f0d0048;
-        public static final int id_rsa=0x7f0d0006;
-        public static final int id_rsa_public=0x7f0d0007;
-        public static final int image=0x7f0d0057;
-        public static final int image_item=0x7f0d001b;
-        public static final int init_listView=0x7f0d0049;
-        public static final int inputText=0x7f0d002b;
-        public static final int iv=0x7f0d0030;
-        public static final int lin=0x7f0d0004;
-        public static final int linearLayout1=0x7f0d001a;
-        public static final int linerbtn=0x7f0d0026;
-        public static final int login=0x7f0d0055;
-        public static final int ly=0x7f0d000c;
-        public static final int main_fragment=0x7f0d0039;
-        public static final int msmContext=0x7f0d000a;
-        public static final int multiAutoCompleteTextView=0x7f0d0042;
-        public static final int myPhoneInfo=0x7f0d003e;
-        public static final int myScrollV=0x7f0d002e;
-        public static final int numberIn=0x7f0d003d;
-        public static final int on_item1=0x7f0d0059;
-        public static final int on_item2=0x7f0d005a;
-        public static final int on_item3=0x7f0d005b;
-        public static final int on_item4=0x7f0d005c;
-        public static final int path=0x7f0d004e;
-        public static final int progressBar=0x7f0d0051;
-        public static final int progressBarh=0x7f0d002d;
-        public static final int reg=0x7f0d001e;
-        public static final int resultView=0x7f0d0052;
-        public static final int resultimg=0x7f0d003c;
-        public static final int rootly=0x7f0d004d;
+        public static final int co=0x7f0d0008;
+        public static final int comemsm=0x7f0d000e;
+        public static final int content=0x7f0d0053;
+        public static final int dealimg=0x7f0d0034;
+        public static final int downloadbutton=0x7f0d005c;
+        public static final int edt=0x7f0d006a;
+        public static final int fragment_two=0x7f0d0046;
+        public static final int frameImage=0x7f0d0015;
+        public static final int getGps=0x7f0d0051;
+        public static final int getcontact=0x7f0d0063;
+        public static final int gif_movie_girl=0x7f0d004f;
+        public static final int gif_movie_view=0x7f0d004e;
+        public static final int goback=0x7f0d0054;
+        public static final int gps_btn=0x7f0d0050;
+        public static final int headerDownView=0x7f0d0027;
+        public static final int headerView=0x7f0d0024;
+        public static final int headerViewAnimation=0x7f0d0012;
+        public static final int headerViewGestrueZoom=0x7f0d0048;
+        public static final int headerViewweb=0x7f0d0007;
+        public static final int header_tips=0x7f0d0055;
+        public static final int id_rsa=0x7f0d000b;
+        public static final int id_rsa_public=0x7f0d000c;
+        public static final int imag=0x7f0d0049;
+        public static final int image=0x7f0d006b;
+        public static final int image_item=0x7f0d0020;
+        public static final int imageview=0x7f0d0002;
+        public static final int init_listView=0x7f0d0056;
+        public static final int inputText=0x7f0d0030;
+        public static final int iv=0x7f0d0035;
+        public static final int lin=0x7f0d0009;
+        public static final int linearLayout1=0x7f0d001f;
+        public static final int linerbtn=0x7f0d002b;
+        public static final int login=0x7f0d0062;
+        public static final int ly=0x7f0d0011;
+        public static final int main_fragment=0x7f0d003e;
+        public static final int msharedtv=0x7f0d0065;
+        public static final int msmContext=0x7f0d000f;
+        public static final int multiAutoCompleteTextView=0x7f0d0047;
+        public static final int myPhoneInfo=0x7f0d0043;
+        public static final int myScrollV=0x7f0d0033;
+        public static final int numberIn=0x7f0d0042;
+        public static final int on_item1=0x7f0d006d;
+        public static final int on_item2=0x7f0d006e;
+        public static final int on_item3=0x7f0d006f;
+        public static final int on_item4=0x7f0d0070;
+        public static final int path=0x7f0d005b;
+        public static final int progressBar=0x7f0d005e;
+        public static final int progressBarh=0x7f0d0032;
+        public static final int read=0x7f0d0069;
+        public static final int reg=0x7f0d0023;
+        public static final int resultView=0x7f0d005f;
+        public static final int resultimg=0x7f0d0041;
+        public static final int rootly=0x7f0d005a;
         public static final int round=0x7f0d0001;
-        public static final int sView=0x7f0d0008;
-        public static final int sb1=0x7f0d0031;
-        public static final int sb2=0x7f0d0032;
-        public static final int sb3=0x7f0d0033;
-        public static final int sb4=0x7f0d0034;
-        public static final int sb5=0x7f0d0035;
-        public static final int selectpic=0x7f0d003b;
-        public static final int setPosition=0x7f0d0020;
-        public static final int shaderImage=0x7f0d0016;
-        public static final int showImage=0x7f0d002c;
-        public static final int sinner=0x7f0d0018;
-        public static final int spinner=0x7f0d003a;
-        public static final int start=0x7f0d000e;
-        public static final int stop=0x7f0d000f;
-        public static final int stopbutton=0x7f0d0050;
-        public static final int sview=0x7f0d0017;
-        public static final int text=0x7f0d0036;
-        public static final int text_item=0x7f0d001c;
-        public static final int title_bar_left_menu=0x7f0d0037;
-        public static final int title_bar_right_menu=0x7f0d0038;
-        public static final int toggleButton1=0x7f0d0040;
-        public static final int txt_info=0x7f0d0045;
-        public static final int username=0x7f0d0053;
-        public static final int userpsd=0x7f0d0054;
-        public static final int version_item=0x7f0d001d;
+        public static final int sView=0x7f0d000d;
+        public static final int save=0x7f0d0066;
+        public static final int sb1=0x7f0d0036;
+        public static final int sb2=0x7f0d0037;
+        public static final int sb3=0x7f0d0038;
+        public static final int sb4=0x7f0d0039;
+        public static final int sb5=0x7f0d003a;
+        public static final int seekbardegress=0x7f0d0006;
+        public static final int seekbarscale=0x7f0d0004;
+        public static final int selectpic=0x7f0d0040;
+        public static final int setPosition=0x7f0d0025;
+        public static final int shaderImage=0x7f0d001b;
+        public static final int sharedHeaderView=0x7f0d0064;
+        public static final int showImage=0x7f0d0031;
+        public static final int sinner=0x7f0d001d;
+        public static final int spinner=0x7f0d003f;
+        public static final int start=0x7f0d0013;
+        public static final int startService=0x7f0d004a;
+        public static final int stop=0x7f0d0014;
+        public static final int stopService=0x7f0d004b;
+        public static final int stopbutton=0x7f0d005d;
+        public static final int sview=0x7f0d001c;
+        public static final int text=0x7f0d003b;
+        public static final int text_item=0x7f0d0021;
+        public static final int textdegress=0x7f0d0005;
+        public static final int textscale=0x7f0d0003;
+        public static final int title_bar_left_menu=0x7f0d003c;
+        public static final int title_bar_right_menu=0x7f0d003d;
+        public static final int toggleButton1=0x7f0d0045;
+        public static final int txt_info=0x7f0d0052;
+        public static final int username=0x7f0d0060;
+        public static final int userpsd=0x7f0d0061;
+        public static final int version_item=0x7f0d0022;
+        public static final int write=0x7f0d0068;
     }
     public static final class layout {
-        public static final int activity_web_chrome=0x7f030000;
-        public static final int animation_frame_ly=0x7f030001;
-        public static final int app_grid_item=0x7f030002;
-        public static final int bmap_activity_ly=0x7f030003;
-        public static final int camera_set_activity_ly=0x7f030004;
-        public static final int down_image_activity_ly=0x7f030005;
-        public static final int fragment_four=0x7f030006;
-        public static final int fragment_main_ly=0x7f030007;
-        public static final int fragment_one=0x7f030008;
-        public static final int fragment_three=0x7f030009;
-        public static final int fragment_two=0x7f03000a;
-        public static final int get_gps_activity_ly=0x7f03000b;
-        public static final int header_view=0x7f03000c;
-        public static final int init_activity_ly=0x7f03000d;
-        public static final int init_listview=0x7f03000e;
-        public static final int list_app_activity_ly=0x7f03000f;
-        public static final int multiple_thread_down_loader_ly=0x7f030010;
-        public static final int my_expandable_list_ly=0x7f030011;
-        public static final int my_preference_ly=0x7f030012;
-        public static final int tabcontent=0x7f030013;
-        public static final int wrap_ly=0x7f030014;
+        public static final int activity_matrix=0x7f030000;
+        public static final int activity_web_chrome=0x7f030001;
+        public static final int animation_frame_ly=0x7f030002;
+        public static final int app_grid_item=0x7f030003;
+        public static final int bmap_activity_ly=0x7f030004;
+        public static final int camera_set_activity_ly=0x7f030005;
+        public static final int down_image_activity_ly=0x7f030006;
+        public static final int fragment_four=0x7f030007;
+        public static final int fragment_main_ly=0x7f030008;
+        public static final int fragment_one=0x7f030009;
+        public static final int fragment_three=0x7f03000a;
+        public static final int fragment_two=0x7f03000b;
+        public static final int gestrue_zoom_ly=0x7f03000c;
+        public static final int get_gps_activity_ly=0x7f03000d;
+        public static final int header_view=0x7f03000e;
+        public static final int init_activity_ly=0x7f03000f;
+        public static final int init_listview=0x7f030010;
+        public static final int list_app_activity_ly=0x7f030011;
+        public static final int multiple_thread_down_loader_ly=0x7f030012;
+        public static final int my_expandable_list_ly=0x7f030013;
+        public static final int my_preference_ly=0x7f030014;
+        public static final int my_shared_preference_ly=0x7f030015;
+        public static final int tabcontent=0x7f030016;
+        public static final int wrap_ly=0x7f030017;
     }
     public static final class menu {
         public static final int animation_frame=0x7f0c0000;
@@ -672,21 +723,25 @@ some parent container.
         public static final int down_image=0x7f0c0003;
         public static final int fragment_demo=0x7f0c0004;
         public static final int fragment_main=0x7f0c0005;
-        public static final int get_g=0x7f0c0006;
-        public static final int init=0x7f0c0007;
-        public static final int list_app=0x7f0c0008;
-        public static final int multiple_thread_down_loader=0x7f0c0009;
-        public static final int my_preference=0x7f0c000a;
-        public static final int web_chrome=0x7f0c000b;
-        public static final int wrap=0x7f0c000c;
+        public static final int gestrue_zoom=0x7f0c0006;
+        public static final int get_g=0x7f0c0007;
+        public static final int init=0x7f0c0008;
+        public static final int list_app=0x7f0c0009;
+        public static final int matrix=0x7f0c000a;
+        public static final int multiple_thread_down_loader=0x7f0c000b;
+        public static final int my_preference=0x7f0c000c;
+        public static final int my_shared_preference=0x7f0c000d;
+        public static final int web_chrome=0x7f0c000e;
+        public static final int wrap=0x7f0c000f;
     }
     public static final class raw {
         public static final int beep=0x7f060000;
     }
     public static final class string {
         public static final int action_settings=0x7f0a0014;
+        public static final int alarmButton=0x7f0a0025;
         public static final int app_name=0x7f0a0000;
-        public static final int cancel=0x7f0a0022;
+        public static final int cancel=0x7f0a0028;
         public static final int capture=0x7f0a000c;
         public static final int changeshine=0x7f0a000d;
         public static final int downbutton=0x7f0a0017;
@@ -695,7 +750,7 @@ some parent container.
         public static final int fragment_title=0x7f0a0009;
         public static final int hello_world=0x7f0a0001;
         public static final int no_camera=0x7f0a000b;
-        public static final int ok=0x7f0a0021;
+        public static final int ok=0x7f0a0027;
         /**  选项菜单 
          */
         public static final int on_item0=0x7f0a000e;
@@ -706,7 +761,11 @@ some parent container.
         public static final int on_item5=0x7f0a0013;
         public static final int path=0x7f0a0016;
         public static final int sdcarderror=0x7f0a0019;
+        public static final int shortCutButton=0x7f0a0029;
+        public static final int shortCutTitle=0x7f0a002a;
         public static final int start=0x7f0a001f;
+        public static final int startService=0x7f0a0023;
+        public static final int stopService=0x7f0a0024;
         public static final int stopbutton=0x7f0a0018;
         public static final int title_activity_animation_frame=0x7f0a001e;
         public static final int title_activity_bmap=0x7f0a0004;
@@ -714,11 +773,14 @@ some parent container.
         public static final int title_activity_down_image=0x7f0a0006;
         public static final int title_activity_fragment_demo=0x7f0a0007;
         public static final int title_activity_fragment_main=0x7f0a0008;
+        public static final int title_activity_gestrue_zoom=0x7f0a0022;
         public static final int title_activity_get_gps=0x7f0a0003;
         public static final int title_activity_list_app=0x7f0a0002;
+        public static final int title_activity_matrix=0x7f0a0026;
         public static final int title_activity_multiple_thread_down_loader=0x7f0a0015;
         public static final int title_activity_my_expandable_list=0x7f0a001c;
         public static final int title_activity_my_preference=0x7f0a001d;
+        public static final int title_activity_my_shared_preference=0x7f0a0021;
         public static final int title_activity_web_chrome=0x7f0a0005;
         public static final int title_activity_wrap=0x7f0a0020;
     }
@@ -750,12 +812,102 @@ some parent container.
          */
         public static final int AppTheme=0x7f0b0001;
         public static final int Bottombtnimg=0x7f0b0002;
+        public static final int Widget_GifMoviewView=0x7f0b0004;
         public static final int theme=0x7f0b0003;
     }
     public static final class xml {
         public static final int preferencescreen=0x7f050000;
     }
     public static final class styleable {
+        /** Attributes that can be used with a CustomTheme.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #CustomTheme_gifMoviewViewStyle com.korewang.shuishui:gifMoviewViewStyle}</code></td><td></td></tr>
+           </table>
+           @see #CustomTheme_gifMoviewViewStyle
+         */
+        public static final int[] CustomTheme = {
+            0x7f010006
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.korewang.shuishui.R.attr#gifMoviewViewStyle}
+          attribute's value can be found in the {@link #CustomTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.korewang.shuishui:gifMoviewViewStyle
+        */
+        public static final int CustomTheme_gifMoviewViewStyle = 0;
+        /** Attributes that can be used with a GifMoviewView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #GifMoviewView_gif com.korewang.shuishui:gif}</code></td><td></td></tr>
+           <tr><td><code>{@link #GifMoviewView_paused com.korewang.shuishui:paused}</code></td><td></td></tr>
+           </table>
+           @see #GifMoviewView_gif
+           @see #GifMoviewView_paused
+         */
+        public static final int[] GifMoviewView = {
+            0x7f010004, 0x7f010005
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.korewang.shuishui.R.attr#gif}
+          attribute's value can be found in the {@link #GifMoviewView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.korewang.shuishui:gif
+        */
+        public static final int GifMoviewView_gif = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.korewang.shuishui.R.attr#paused}
+          attribute's value can be found in the {@link #GifMoviewView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.korewang.shuishui:paused
+        */
+        public static final int GifMoviewView_paused = 1;
+        /** Attributes that can be used with a MyGifView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MyGifView_auto_play com.korewang.shuishui:auto_play}</code></td><td></td></tr>
+           </table>
+           @see #MyGifView_auto_play
+         */
+        public static final int[] MyGifView = {
+            0x7f010003
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.korewang.shuishui.R.attr#auto_play}
+          attribute's value can be found in the {@link #MyGifView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.korewang.shuishui:auto_play
+        */
+        public static final int MyGifView_auto_play = 0;
         /** Attributes that can be used with a RoundImageView.
            <p>Includes the following attributes:</p>
            <table>

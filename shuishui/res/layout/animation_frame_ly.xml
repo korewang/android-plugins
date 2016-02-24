@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/theme"
     android:id="@+id/ly"
-    tools:context="com.korewang.shuishui.AnimationFrameActivity" >
+    tools:context="com.korewang.shuishui.animation.activitys.AnimationFrameActivity" >
 
    
 	<com.korewang.shuishui.widget.HeaderView
@@ -28,8 +28,8 @@
 			
 				 <ImageView
 				     android:id="@+id/frameImage"
-				     android:layout_width="wrap_content"
-				     android:layout_height="wrap_content" />
+				     android:layout_width="200dp"
+				     android:layout_height="150dp" />
 			 </LinearLayout>
 			 <LinearLayout 
 			    android:layout_width="fill_parent"
@@ -64,7 +64,7 @@
 		      <ImageView
 				     android:id="@+id/shaderImage"
 				     android:layout_width="wrap_content"
-				     android:layout_height="20dp" 
+				     android:layout_height="100dp" 
 				     android:background="@drawable/sock"/>
 		      <ScrollView
 		          android:id="@+id/sview"

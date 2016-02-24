@@ -11,11 +11,16 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:id="@+id/headerView" />
-
+	<!-- 
+			 组件也可以使用include的使用   在layout里使用com.korewang.shuishui.widget.HeaderView  但是要加上命名空间
+		 listview  去掉黑色背景，
+    	 listView.setCacheColorHint(Color.TRANSPARENT);
+    -->
 	<ListView
 	    android:id="@+id/init_listView"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="wrap_content"
+	    android1:cacheColorHint="#00000000" >
 	</ListView>
 
 </LinearLayout>
