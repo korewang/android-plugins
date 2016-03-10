@@ -2,14 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:background="@color/white"
     tools:context="com.korewang.shuishui.MatrixActivity" >
-    
+    <TextView 
+        android:id="@+id/scroll"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:text="如果一根火柴不能算作一个 1的话如果一根火柴不能算作一个 1的话如果一根火柴不能算作一个 1的话如果一根火柴不能算作一个 1的话11"/>
     <ImageView 
         android:id="@+id/imageview"
         android:layout_height="150dp"
@@ -42,5 +53,11 @@
 	    android:layout_below="@+id/imageview"
 	    android:layout_marginTop="10dp"
 	    android:max="360" />
+
+	<ListView
+	    android:id="@+id/myList"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" >
+	</ListView>
 
 </LinearLayout>
